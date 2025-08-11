@@ -138,6 +138,7 @@
             border-radius: 5px;
             margin: 1.5rem 0;
             overflow: hidden;
+            transition: all 0.5s ease;
         }
         .progress-bar {
             height: 100%;
@@ -151,6 +152,7 @@
             gap: 0.8rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
+            transition: all 0.5s ease;
         }
         .time-unit {
             text-align: center;
@@ -240,7 +242,6 @@
             left: 100%;
         }
         button:hover {
-            background: #f0d78c;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
@@ -274,6 +275,27 @@
         .reset-btn:hover {
             background: #a00000;
         }
+        .disciplined-mode-btn {
+            background: #4a4a4a;
+            color: #fff;
+        }
+        .disciplined-mode-btn:hover {
+            background: #6a6a6a;
+        }
+        .disciplined-mode-btn.active {
+            background: #d4af37;
+            color: #000;
+        }
+        .disciplined-mode-btn.active:hover {
+            background: #f0d78c;
+        }
+        .record-message-btn {
+            background: #9c27b0;
+            color: #fff;
+        }
+        .record-message-btn:hover {
+            background: #ab47bc;
+        }
         .completed {
             background: rgba(0, 128, 0, 0.2);
             border: 1px solid #00ff00;
@@ -295,6 +317,14 @@
             border-top: 1px solid #333;
             font-size: 0.9rem;
             color: #777;
+        }
+        /* Disciplined Mode Styles */
+        body.disciplined-mode .countdown,
+        body.disciplined-mode .progress-container {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
         }
         /* Red Zone Styles */
         .red-zone {
@@ -369,6 +399,13 @@
         }
         .exit-red-zone:hover {
             background: #f0f0f0;
+        }
+        .play-message-btn {
+            background: #9c27b0;
+            color: #fff;
+        }
+        .play-message-btn:hover {
+            background: #ab47bc;
         }
         /* Breathing Exercise Styles */
         .breathing-exercise {
@@ -453,6 +490,243 @@
         }
         .exit-breathing:hover {
             background: #f0f0f0;
+        }
+        /* Message Recorder Styles */
+        .message-recorder {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .message-recorder.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .recorder-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+        .message-recorder h2 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .recorder-instructions {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .message-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .message-type-btn {
+            background: #333;
+            color: #e0e0e0;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+        .message-type-btn.active {
+            background: #d4af37;
+            color: #000;
+        }
+        .message-type-btn:hover {
+            background: #444;
+        }
+        .message-type-btn.active:hover {
+            background: #f0d78c;
+        }
+        .voice-recorder-panel,
+        .text-recorder-panel {
+            display: none;
+            margin-bottom: 2rem;
+        }
+        .voice-recorder-panel.active,
+        .text-recorder-panel.active {
+            display: block;
+        }
+        .recording-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .record-btn {
+            background: #ff0000;
+            color: #fff;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .record-btn:hover {
+            background: #ff3333;
+        }
+        .record-btn.recording {
+            background: #ff3333;
+            animation: pulse 1.5s infinite;
+        }
+        .play-voice-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+        .play-voice-btn:hover {
+            background: #66bb6a;
+        }
+        .text-recorder-panel textarea {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #e0e0e0;
+            padding: 1rem;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1.1rem;
+            resize: vertical;
+            margin-bottom: 1.5rem;
+        }
+        .text-recorder-panel textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .recorder-status {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+            min-height: 30px;
+        }
+        .recorder-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .save-message-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+        .save-message-btn:hover {
+            background: #66bb6a;
+        }
+        .cancel-recording-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .cancel-recording-btn:hover {
+            background: #a00000;
+        }
+        /* Message Playback Styles */
+        .message-playback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .message-playback.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .playback-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+        .message-playback h2 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .message-display {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+            text-align: left;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .voice-playback-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .voice-playback-btn {
+            background: #4caf50;
+            color: #fff;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .voice-playback-btn:hover {
+            background: #66bb6a;
+        }
+        .voice-playback-status {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+        .playback-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .close-playback-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .close-playback-btn:hover {
+            background: #a00000;
         }
         .notification {
             position: fixed;
@@ -553,6 +827,37 @@
                 font-size: 1.1rem;
             }
             
+            .message-recorder h2 {
+                font-size: 2rem;
+            }
+            
+            .recorder-instructions {
+                font-size: 1rem;
+            }
+            
+            .message-type-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                min-width: 120px;
+            }
+            
+            .record-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+            
+            .message-display {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+            
+            .voice-playback-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+            
             .made-by {
                 bottom: 20px;
                 right: 20px;
@@ -636,6 +941,37 @@
                 font-size: 1rem;
             }
             
+            .message-recorder h2 {
+                font-size: 1.8rem;
+            }
+            
+            .recorder-instructions {
+                font-size: 0.9rem;
+            }
+            
+            .message-type-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+            
+            .record-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.1rem;
+            }
+            
+            .message-display {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+            
+            .voice-playback-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.1rem;
+            }
+            
             .made-by {
                 bottom: 15px;
                 right: 15px;
@@ -676,7 +1012,7 @@
                     <div class="value" id="next-goal">96h</div>
                 </div>
             </div>
-            <div class="progress-container">
+            <div class="progress-container" id="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
             <div class="countdown" id="countdown">
@@ -711,6 +1047,8 @@
                 <button id="panic-btn" class="panic-btn">PANIC BUTTON</button>
                 <button id="breathe-btn" class="breathe-btn">BREATHE</button>
                 <button id="reset-btn" class="reset-btn">RESET STREAK</button>
+                <button id="disciplined-mode-btn" class="disciplined-mode-btn">DISCIPLINED MODE</button>
+                <button id="record-message-btn" class="record-message-btn">RECORD MESSAGE</button>
             </div>
         </div>
     </main>
@@ -726,6 +1064,7 @@
                 IF YOU GIVE IN NOW, YOU'RE FAILING YOUR FUTURE SELF!
             </div>
             <div class="red-zone-controls">
+                <button id="play-message-btn" class="play-message-btn" style="display: none;">PLAY MY MESSAGE</button>
                 <button id="exit-red-zone" class="exit-red-zone">I'M IN CONTROL</button>
             </div>
         </div>
@@ -747,6 +1086,63 @@
         </div>
     </div>
     
+    <!-- Message Recorder Overlay -->
+    <div class="message-recorder" id="message-recorder">
+        <div class="recorder-content">
+            <h2>RECORD A MESSAGE TO YOUR FUTURE SELF</h2>
+            <p class="recorder-instructions">
+                When you're feeling strong, record a message to remind yourself why this matters. 
+                When you're close to relapsing, play it back to hear your own voice from a moment of clarity.
+            </p>
+            
+            <div class="message-type-selector">
+                <button id="voice-message-btn" class="message-type-btn active">Voice Message</button>
+                <button id="text-message-btn" class="message-type-btn">Text Message</button>
+            </div>
+            
+            <div class="voice-recorder-panel active" id="voice-recorder-panel">
+                <div class="recording-controls">
+                    <button id="record-btn" class="record-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button id="play-voice-btn" class="play-voice-btn" style="display: none;">
+                        <i class="fas fa-play"></i> PLAY
+                    </button>
+                </div>
+                <div class="recorder-status" id="voice-recorder-status">Click the microphone to start recording</div>
+            </div>
+            
+            <div class="text-recorder-panel" id="text-recorder-panel">
+                <textarea id="message-text" placeholder="Type your message to your future self..."></textarea>
+            </div>
+            
+            <div class="recorder-actions">
+                <button id="save-message-btn" class="save-message-btn">SAVE MESSAGE</button>
+                <button id="cancel-recording-btn" class="cancel-recording-btn">CANCEL</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Playback Overlay -->
+    <div class="message-playback" id="message-playback">
+        <div class="playback-content">
+            <h2>MESSAGE FROM YOUR PAST SELF</h2>
+            
+            <div class="voice-playback-controls" id="voice-playback-controls" style="display: none;">
+                <button id="voice-playback-btn" class="voice-playback-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <div class="voice-playback-status" id="voice-playback-status">Click to play your message</div>
+            </div>
+            
+            <div class="message-display" id="message-display"></div>
+            
+            <div class="playback-actions">
+                <button id="close-playback-btn" class="close-playback-btn">CLOSE</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Notification -->
     <div class="notification" id="notification"></div>
     
@@ -756,6 +1152,8 @@
         const panicBtn = document.getElementById('panic-btn');
         const breatheBtn = document.getElementById('breathe-btn');
         const resetBtn = document.getElementById('reset-btn');
+        const disciplinedModeBtn = document.getElementById('disciplined-mode-btn');
+        const recordMessageBtn = document.getElementById('record-message-btn');
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
@@ -771,10 +1169,28 @@
         const redZoneTimerEl = document.getElementById('red-zone-timer');
         const redZoneMessageEl = document.getElementById('red-zone-message');
         const exitRedZoneBtn = document.getElementById('exit-red-zone');
+        const playMessageBtn = document.getElementById('play-message-btn');
         const breathingExerciseEl = document.getElementById('breathing-exercise');
         const breathingCircleEl = document.getElementById('breathing-circle');
         const breathingInstructionsEl = document.getElementById('breathing-instructions');
         const exitBreathingBtn = document.getElementById('exit-breathing');
+        const messageRecorderEl = document.getElementById('message-recorder');
+        const voiceMessageBtn = document.getElementById('voice-message-btn');
+        const textMessageBtn = document.getElementById('text-message-btn');
+        const voiceRecorderPanel = document.getElementById('voice-recorder-panel');
+        const textRecorderPanel = document.getElementById('text-recorder-panel');
+        const recordBtn = document.getElementById('record-btn');
+        const playVoiceBtn = document.getElementById('play-voice-btn');
+        const voiceRecorderStatus = document.getElementById('voice-recorder-status');
+        const messageText = document.getElementById('message-text');
+        const saveMessageBtn = document.getElementById('save-message-btn');
+        const cancelRecordingBtn = document.getElementById('cancel-recording-btn');
+        const messagePlaybackEl = document.getElementById('message-playback');
+        const voicePlaybackControls = document.getElementById('voice-playback-controls');
+        const voicePlaybackBtn = document.getElementById('voice-playback-btn');
+        const voicePlaybackStatus = document.getElementById('voice-playback-status');
+        const messageDisplay = document.getElementById('message-display');
+        const closePlaybackBtn = document.getElementById('close-playback-btn');
         const notificationEl = document.getElementById('notification');
         const madeByEl = document.getElementById('made-by');
         
@@ -823,6 +1239,7 @@
         let streak = 0;
         let isRunning = false;
         let endTime = null;
+        let disciplinedMode = false;
         
         // Red Zone variables
         let redZoneInterval = null;
@@ -833,6 +1250,16 @@
         let breathingInterval = null;
         let breathingStep = 0; // 0: inhale, 1: hold, 2: exhale
         let breathingTimeLeft = 4; // Start with inhale time
+        
+        // Message recording variables
+        let messageType = 'voice'; // 'voice' or 'text'
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordedAudio = null;
+        let savedMessage = {
+            type: null,
+            content: null
+        };
         
         // Show made by sko_az message
         function showMadeBy() {
@@ -861,6 +1288,7 @@
             // Update display with loaded data
             updateDisplay();
             updateStreakInfo();
+            updateDisciplinedMode();
             
             // If the timer was running when the page was last closed, continue it
             if (endTime && endTime > Date.now()) {
@@ -887,6 +1315,12 @@
                     initialTime = data.initialTime || 48 * 60 * 60;
                     timeLeft = data.timeLeft || 48 * 60 * 60;
                     endTime = data.endTime || null;
+                    disciplinedMode = data.disciplinedMode || false;
+                    
+                    // Load saved message if available
+                    if (data.savedMessage) {
+                        savedMessage = data.savedMessage;
+                    }
                     
                     // If we have an end time, calculate the current timeLeft
                     if (endTime) {
@@ -911,7 +1345,9 @@
                     streak,
                     initialTime,
                     timeLeft,
-                    endTime
+                    endTime,
+                    disciplinedMode,
+                    savedMessage
                 };
                 localStorage.setItem('kingTimerData', JSON.stringify(data));
             } catch (e) {
@@ -1074,6 +1510,32 @@
             }
         }
         
+        // Toggle Disciplined Mode
+        function toggleDisciplinedMode() {
+            disciplinedMode = !disciplinedMode;
+            updateDisciplinedMode();
+            saveData();
+            
+            if (disciplinedMode) {
+                showNotification("Disciplined Mode activated. Focus on your journey, not the timer.");
+            } else {
+                showNotification("Disciplined Mode deactivated. Timer and progress are now visible.");
+            }
+        }
+        
+        // Update Disciplined Mode display
+        function updateDisciplinedMode() {
+            if (disciplinedMode) {
+                document.body.classList.add('disciplined-mode');
+                disciplinedModeBtn.classList.add('active');
+                disciplinedModeBtn.textContent = "DISCIPLINED MODE: ON";
+            } else {
+                document.body.classList.remove('disciplined-mode');
+                disciplinedModeBtn.classList.remove('active');
+                disciplinedModeBtn.textContent = "DISCIPLINED MODE";
+            }
+        }
+        
         // Show notification
         function showNotification(message) {
             notificationEl.textContent = message;
@@ -1089,6 +1551,13 @@
             redZoneEl.classList.add('active');
             redZoneTimeLeft = 300; // 5 minutes
             updateRedZoneTimer();
+            
+            // Show play message button if there's a saved message
+            if (savedMessage.type && savedMessage.content) {
+                playMessageBtn.style.display = 'block';
+            } else {
+                playMessageBtn.style.display = 'none';
+            }
             
             // Start countdown
             redZoneInterval = setInterval(() => {
@@ -1177,6 +1646,200 @@
             showNotification("Breathing exercise completed. You're in control.");
         }
         
+        // Message recording functions
+        function openMessageRecorder() {
+            messageRecorderEl.classList.add('active');
+            
+            // Reset recorder state
+            audioChunks = [];
+            recordedAudio = null;
+            mediaRecorder = null;
+            
+            // Set default message type
+            messageType = 'voice';
+            updateMessageTypeDisplay();
+            
+            // Reset UI
+            recordBtn.classList.remove('recording');
+            recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            playVoiceBtn.style.display = 'none';
+            voiceRecorderStatus.textContent = 'Click the microphone to start recording';
+            messageText.value = '';
+        }
+        
+        function closeMessageRecorder() {
+            messageRecorderEl.classList.remove('active');
+        }
+        
+        function setMessageType(type) {
+            messageType = type;
+            updateMessageTypeDisplay();
+        }
+        
+        function updateMessageTypeDisplay() {
+            // Update button states
+            if (messageType === 'voice') {
+                voiceMessageBtn.classList.add('active');
+                textMessageBtn.classList.remove('active');
+                voiceRecorderPanel.classList.add('active');
+                textRecorderPanel.classList.remove('active');
+            } else {
+                voiceMessageBtn.classList.remove('active');
+                textMessageBtn.classList.add('active');
+                voiceRecorderPanel.classList.remove('active');
+                textRecorderPanel.classList.add('active');
+            }
+        }
+        
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    recordedAudio = URL.createObjectURL(audioBlob);
+                    
+                    // Show play button
+                    playVoiceBtn.style.display = 'block';
+                    voiceRecorderStatus.textContent = 'Recording complete. Click play to review.';
+                    
+                    // Stop all tracks
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                mediaRecorder.start();
+                
+                // Update UI
+                recordBtn.classList.add('recording');
+                recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                voiceRecorderStatus.textContent = 'Recording... Click to stop';
+                
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                voiceRecorderStatus.textContent = 'Error: Could not access microphone. Please check permissions.';
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                
+                // Update UI
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            }
+        }
+        
+        function playRecordedAudio() {
+            if (recordedAudio) {
+                const audio = new Audio(recordedAudio);
+                audio.play();
+                
+                voiceRecorderStatus.textContent = 'Playing recording...';
+                
+                audio.onended = () => {
+                    voiceRecorderStatus.textContent = 'Recording complete. Click play to review.';
+                };
+            }
+        }
+        
+        function saveMessage() {
+            if (messageType === 'voice') {
+                if (!recordedAudio) {
+                    showNotification('Please record a voice message first.');
+                    return;
+                }
+                
+                // Convert blob URL to base64 for storage
+                fetch(recordedAudio)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            savedMessage = {
+                                type: 'voice',
+                                content: reader.result
+                            };
+                            saveData();
+                            showNotification('Voice message saved successfully!');
+                            closeMessageRecorder();
+                        };
+                        reader.readAsDataURL(blob);
+                    });
+            } else {
+                const text = messageText.value.trim();
+                if (!text) {
+                    showNotification('Please enter a text message first.');
+                    return;
+                }
+                
+                savedMessage = {
+                    type: 'text',
+                    content: text
+                };
+                saveData();
+                showNotification('Text message saved successfully!');
+                closeMessageRecorder();
+            }
+        }
+        
+        function playSavedMessage() {
+            if (!savedMessage.type || !savedMessage.content) {
+                showNotification('No saved message found.');
+                return;
+            }
+            
+            messagePlaybackEl.classList.add('active');
+            
+            if (savedMessage.type === 'voice') {
+                // Show voice controls, hide text display
+                voicePlaybackControls.style.display = 'block';
+                messageDisplay.style.display = 'none';
+                
+                // Create audio element from base64
+                const audio = new Audio(savedMessage.content);
+                
+                voicePlaybackBtn.onclick = () => {
+                    if (audio.paused) {
+                        audio.play();
+                        voicePlaybackBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        voicePlaybackStatus.textContent = 'Playing message...';
+                        
+                        audio.onended = () => {
+                            voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                            voicePlaybackStatus.textContent = 'Click to play your message';
+                        };
+                    } else {
+                        audio.pause();
+                        voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        voicePlaybackStatus.textContent = 'Click to play your message';
+                    }
+                };
+            } else {
+                // Show text display, hide voice controls
+                voicePlaybackControls.style.display = 'none';
+                messageDisplay.style.display = 'block';
+                messageDisplay.textContent = savedMessage.content;
+            }
+        }
+        
+        function closeMessagePlayback() {
+            messagePlaybackEl.classList.remove('active');
+            
+            // Reset audio playback
+            if (voicePlaybackBtn) {
+                voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                voicePlaybackStatus.textContent = 'Click to play your message';
+            }
+        }
+        
         // Event listeners
         startBtn.addEventListener('click', startMission);
         resetBtn.addEventListener('click', resetStreak);
@@ -1185,6 +1848,26 @@
         breatheBtn.addEventListener('click', startBreathingExercise);
         exitBreathingBtn.addEventListener('click', exitBreathingExercise);
         motivationEl.addEventListener('click', getRandomMotivation);
+        disciplinedModeBtn.addEventListener('click', toggleDisciplinedMode);
+        recordMessageBtn.addEventListener('click', openMessageRecorder);
+        
+        // Message recorder event listeners
+        voiceMessageBtn.addEventListener('click', () => setMessageType('voice'));
+        textMessageBtn.addEventListener('click', () => setMessageType('text'));
+        recordBtn.addEventListener('click', () => {
+            if (recordBtn.classList.contains('recording')) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+        playVoiceBtn.addEventListener('click', playRecordedAudio);
+        saveMessageBtn.addEventListener('click', saveMessage);
+        cancelRecordingBtn.addEventListener('click', closeMessageRecorder);
+        
+        // Message playback event listeners
+        playMessageBtn.addEventListener('click', playSavedMessage);
+        closePlaybackBtn.addEventListener('click', closeMessagePlayback);
         
         // Start quote rotation
         setInterval(() => {
