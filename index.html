@@ -6,7 +6,1309 @@
     <title>QUIT PORN. BECOME A KING.</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        /* Made by sko_az styles */
+        .made-by {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 14px;
+            color: rgba(212, 175, 55, 0.7);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            letter-spacing: 1px;
+            font-family: 'Roboto Condensed', sans-serif;
+            text-transform: uppercase;
+        }
+        .made-by.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .made-by.hide {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        /* Top Wake-Up Button */
+        .top-wakeup-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #8b0000, #ff0000);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        .top-wakeup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.7);
+        }
+        .top-wakeup-btn:active {
+            transform: translateY(1px);
+        }
+        .top-wakeup-btn i {
+            font-size: 16px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid #d4af37;
+        }
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            color: #d4af37;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            color: #a0a0a0;
+            letter-spacing: 1px;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .timer-container {
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            border: 1px solid #333;
+        }
+        .streak-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .streak-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+        .streak-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .streak-box h3 {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+        .streak-box .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f0d78c);
+            width: 0%;
+            transition: width 1s ease;
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            transition: all 0.5s ease;
+        }
+        .time-unit {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            min-width: 80px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        .time-unit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .time-unit .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            line-height: 1;
+        }
+        .time-unit .label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+        .motivation {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-left: 4px solid #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .motivation:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+        .motivation p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .motivation .author {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #d4af37;
+            font-weight: 700;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+        }
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        .panic-btn {
+            background: #ff0000;
+            color: #fff;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        .panic-btn:hover {
+            background: #ff3333;
+        }
+        .breathe-btn {
+            background: #1e88e5;
+            color: #fff;
+        }
+        .breathe-btn:hover {
+            background: #42a5f5;
+        }
+        .reset-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .reset-btn:hover {
+            background: #a00000;
+        }
+        .disciplined-mode-btn {
+            background: #4a4a4a;
+            color: #fff;
+        }
+        .disciplined-mode-btn:hover {
+            background: #6a6a6a;
+        }
+        .disciplined-mode-btn.active {
+            background: #d4af37;
+            color: #000;
+        }
+        .disciplined-mode-btn.active:hover {
+            background: #f0d78c;
+        }
+        .record-message-btn {
+            background: #9c27b0;
+            color: #fff;
+        }
+        .record-message-btn:hover {
+            background: #ab47bc;
+        }
+        .completed {
+            background: rgba(0, 128, 0, 0.2);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+        .completed h3 {
+            color: #00ff00;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        /* Disciplined Mode Styles */
+        body.disciplined-mode .countdown,
+        body.disciplined-mode .progress-container {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        /* Red Zone Styles */
+        .red-zone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .red-zone.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .red-zone-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        .red-zone h2 {
+            font-size: 3rem;
+            color: #ff0000;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: blink 1s infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .red-zone-timer {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        .red-zone-message {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        .red-zone-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .red-zone button {
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+        .exit-red-zone {
+            background: #ffffff;
+            color: #000;
+        }
+        .exit-red-zone:hover {
+            background: #f0f0f0;
+        }
+        .play-message-btn {
+            background: #9c27b0;
+            color: #fff;
+        }
+        .play-message-btn:hover {
+            background: #ab47bc;
+        }
+        /* Breathing Exercise Styles */
+        .breathing-exercise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 136, 229, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .breathing-exercise.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .breathing-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        .breathing-exercise h2 {
+            font-size: 3rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .breathing-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 1.5rem auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            color: #ffffff;
+            transition: all 4s ease-in-out;
+        }
+        .breathing-circle.inhale {
+            transform: scale(1.5);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .breathing-circle.hold {
+            transform: scale(1.5);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .breathing-circle.exhale {
+            transform: scale(1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .breathing-instructions {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            padding: 0 1rem;
+        }
+        .breathing-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .breathing-controls button {
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+        .exit-breathing {
+            background: #ffffff;
+            color: #1e88e5;
+        }
+        .exit-breathing:hover {
+            background: #f0f0f0;
+        }
+        /* Message Recorder Styles */
+        .message-recorder {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .message-recorder.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .recorder-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+        .message-recorder h2 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .recorder-instructions {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .message-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .message-type-btn {
+            background: #333;
+            color: #e0e0e0;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+        .message-type-btn.active {
+            background: #d4af37;
+            color: #000;
+        }
+        .message-type-btn:hover {
+            background: #444;
+        }
+        .message-type-btn.active:hover {
+            background: #f0d78c;
+        }
+        .voice-recorder-panel,
+        .text-recorder-panel {
+            display: none;
+            margin-bottom: 2rem;
+        }
+        .voice-recorder-panel.active,
+        .text-recorder-panel.active {
+            display: block;
+        }
+        .recording-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .record-btn {
+            background: #ff0000;
+            color: #fff;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .record-btn:hover {
+            background: #ff3333;
+        }
+        .record-btn.recording {
+            background: #ff3333;
+            animation: pulse 1.5s infinite;
+        }
+        .play-voice-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+        .play-voice-btn:hover {
+            background: #66bb6a;
+        }
+        .text-recorder-panel textarea {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #e0e0e0;
+            padding: 1rem;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1.1rem;
+            resize: vertical;
+            margin-bottom: 1.5rem;
+        }
+        .text-recorder-panel textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .recorder-status {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+            min-height: 30px;
+        }
+        .recorder-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .save-message-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+        .save-message-btn:hover {
+            background: #66bb6a;
+        }
+        .cancel-recording-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .cancel-recording-btn:hover {
+            background: #a00000;
+        }
+        /* Message Playback Styles */
+        .message-playback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .message-playback.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .playback-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid #333;
+        }
+        .message-playback h2 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .message-display {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+            text-align: left;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .voice-playback-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .voice-playback-btn {
+            background: #4caf50;
+            color: #fff;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .voice-playback-btn:hover {
+            background: #66bb6a;
+        }
+        .voice-playback-status {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+        .playback-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .close-playback-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .close-playback-btn:hover {
+            background: #a00000;
+        }
+        
+        /* Wake-Up Mode Styles */
+        .wakeup-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            overflow-y: auto;
+        }
+        .wakeup-mode.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .wakeup-content {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid #8b0000;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+        }
+        .wakeup-mode h2 {
+            font-size: 2.8rem;
+            color: #ff3333;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            letter-spacing: 2px;
+        }
+        .wakeup-intro {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(139, 0, 0, 0.3);
+            border-radius: 5px;
+            border-left: 4px solid #ff3333;
+            overflow: hidden;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .animated-text {
+            white-space: nowrap;
+            animation: scrollText 15s linear infinite;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+        @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .wakeup-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+        .tab-btn {
+            background: transparent;
+            color: #777;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 0.8rem 1.5rem;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .tab-btn:hover {
+            color: #ccc;
+        }
+        .tab-btn.active {
+            color: #ff3333;
+            border-bottom-color: #ff3333;
+        }
+        .tab-content {
+            display: none;
+            text-align: left;
+            padding: 1rem;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h3 {
+            font-size: 1.8rem;
+            color: #ff3333;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .truth-item, .psychology-item, .tactic-item {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #ff3333;
+            transition: all 0.3s ease;
+        }
+        .truth-item:hover, .psychology-item:hover, .tactic-item:hover {
+            transform: translateX(5px);
+            background: rgba(139, 0, 0, 0.2);
+        }
+        .truth-item h4, .psychology-item h4, .tactic-item h4 {
+            font-size: 1.3rem;
+            color: #d4af37;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+        .truth-item p, .psychology-item p, .tactic-item p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+        .wakeup-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        .exit-wakeup {
+            background: #d4af37;
+            color: #000;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            min-width: 180px;
+        }
+        .exit-wakeup:hover {
+            background: #f0d78c;
+        }
+        .take-action-btn {
+            background: #ff3333;
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            min-width: 180px;
+        }
+        .take-action-btn:hover {
+            background: #ff5555;
+        }
+        
+        /* Interactive elements in Wake-Up Mode */
+        .interactive-item {
+            position: relative;
+            cursor: pointer;
+        }
+        .interactive-item::after {
+            content: "\f107";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #d4af37;
+            transition: transform 0.3s ease;
+        }
+        .interactive-item.expanded::after {
+            transform: rotate(180deg);
+        }
+        .interactive-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .interactive-item.expanded .interactive-content {
+            max-height: 500px;
+        }
+        .tactic-checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .tactic-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+            z-index: 100;
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+            max-width: 80%;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .top-wakeup-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .timer-container {
+                padding: 1rem;
+            }
+            
+            .streak-box {
+                min-width: 100px;
+                padding: 0.8rem;
+            }
+            
+            .streak-box h3 {
+                font-size: 0.8rem;
+            }
+            
+            .streak-box .value {
+                font-size: 1.5rem;
+            }
+            
+            .time-unit {
+                min-width: 70px;
+                padding: 0.8rem;
+            }
+            
+            .time-unit .value {
+                font-size: 2rem;
+            }
+            
+            .time-unit .label {
+                font-size: 0.8rem;
+            }
+            
+            .motivation p {
+                font-size: 1rem;
+            }
+            
+            .motivation .author {
+                font-size: 0.8rem;
+            }
+            
+            button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+            
+            .red-zone h2 {
+                font-size: 2.5rem;
+            }
+            
+            .red-zone-timer {
+                font-size: 2rem;
+            }
+            
+            .red-zone-message {
+                font-size: 1.2rem;
+                min-height: 80px;
+            }
+            
+            .breathing-exercise h2 {
+                font-size: 2.5rem;
+            }
+            
+            .breathing-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 1.1rem;
+            }
+            
+            .breathing-instructions {
+                font-size: 1.1rem;
+            }
+            
+            .message-recorder h2 {
+                font-size: 2rem;
+            }
+            
+            .recorder-instructions {
+                font-size: 1rem;
+            }
+            
+            .message-type-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                min-width: 120px;
+            }
+            
+            .record-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+            
+            .message-display {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+            
+            .voice-playback-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+            
+            .made-by {
+                bottom: 20px;
+                right: 20px;
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            
+            .notification {
+                top: 10px;
+                right: 10px;
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Wake-Up Mode Responsive */
+            .wakeup-mode h2 {
+                font-size: 2.2rem;
+            }
+            .wakeup-intro {
+                font-size: 1.1rem;
+                height: 50px;
+            }
+            .animated-text {
+                font-size: 1.1rem;
+            }
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .tab-content h3 {
+                font-size: 1.5rem;
+            }
+            .truth-item, .psychology-item, .tactic-item {
+                padding: 1.2rem;
+            }
+            .truth-item h4, .psychology-item h4, .tactic-item h4 {
+                font-size: 1.1rem;
+            }
+            .truth-item p, .psychology-item p, .tactic-item p {
+                font-size: 1rem;
+            }
+            .exit-wakeup, .take-action-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                min-width: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .top-wakeup-btn {
+                top: 5px;
+                right: 5px;
+                padding: 8px 12px;
+                font-size: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .streak-box {
+                min-width: 80px;
+                padding: 0.6rem;
+            }
+            
+            .streak-box .value {
+                font-size: 1.3rem;
+            }
+            
+            .time-unit {
+                min-width: 60px;
+                padding: 0.6rem;
+            }
+            
+            .time-unit .value {
+                font-size: 1.8rem;
+            }
+            
+            .time-unit .label {
+                font-size: 0.7rem;
+            }
+            
+            .motivation {
+                padding: 1rem;
+            }
+            
+            .motivation p {
+                font-size: 0.9rem;
+            }
+            
+            button {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+                min-width: 90px;
+            }
+            
+            .red-zone h2 {
+                font-size: 2rem;
+            }
+            
+            .red-zone-timer {
+                font-size: 1.8rem;
+            }
+            
+            .red-zone-message {
+                font-size: 1rem;
+                min-height: 60px;
+            }
+            
+            .breathing-exercise h2 {
+                font-size: 2rem;
+            }
+            
+            .breathing-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 1rem;
+            }
+            
+            .breathing-instructions {
+                font-size: 1rem;
+            }
+            
+            .message-recorder h2 {
+                font-size: 1.8rem;
+            }
+            
+            .recorder-instructions {
+                font-size: 0.9rem;
+            }
+            
+            .message-type-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+            
+            .record-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.1rem;
+            }
+            
+            .message-display {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+            
+            .voice-playback-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.1rem;
+            }
+            
+            .made-by {
+                bottom: 15px;
+                right: 15px;
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+            
+            .notification {
+                top: 5px;
+                right: 5px;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            /* Wake-Up Mode Responsive */
+            .wakeup-mode h2 {
+                font-size: 1.8rem;
+            }
+            .wakeup-intro {
+                font-size: 1rem;
+                height: 40px;
+            }
+            .animated-text {
+                font-size: 1rem;
+            }
+            .tab-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .tab-content h3 {
+                font-size: 1.3rem;
+            }
+            .truth-item, .psychology-item, .tactic-item {
+                padding: 1rem;
+            }
+            .truth-item h4, .psychology-item h4, .tactic-item h4 {
+                font-size: 1rem;
+            }
+            .truth-item p, .psychology-item p, .tactic-item p {
+                font-size: 0.9rem;
+            }
+            .exit-wakeup, .take-action-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: 130px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Top Wake-Up Button -->
@@ -21,7 +1323,6 @@
         <h1>QUIT PORN. BECOME A KING.</h1>
         <p class="subtitle">DOMINATE YOUR DESIRES OR THEY WILL DOMINATE YOU</p>
     </header>
-    
     <main>
         <div class="timer-container">
             <div class="streak-info">
@@ -64,12 +1365,10 @@
                 <p id="motivation-text">He who conquers himself is the mightiest warrior. Your mind is the battlefield.</p>
                 <div class="author">- Confucius</div>
             </div>
-            
             <div class="completed" id="completed">
                 <h3>MISSION ACCOMPLISHED!</h3>
                 <p>You've conquered this challenge. Now prepare for the next level.</p>
             </div>
-            
             <div class="controls">
                 <button id="start-btn">START MISSION</button>
                 <button id="panic-btn" class="panic-btn">PANIC BUTTON</button>
@@ -80,11 +1379,9 @@
             </div>
         </div>
     </main>
-    
     <footer>
         <p>© 2023 THE KING'S MINDSET | DISCIPLINE EQUALS FREEDOM</p>
     </footer>
-    
     <!-- Red Zone Overlay -->
     <div class="red-zone" id="red-zone">
         <div class="red-zone-content">
@@ -363,6 +1660,813 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
     
-    <script src="js/script.js"></script>
+    <script>
+        // DOM Elements
+        const startBtn = document.getElementById('start-btn');
+        const panicBtn = document.getElementById('panic-btn');
+        const breatheBtn = document.getElementById('breathe-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const disciplinedModeBtn = document.getElementById('disciplined-mode-btn');
+        const recordMessageBtn = document.getElementById('record-message-btn');
+        const topWakeupBtn = document.getElementById('top-wakeup-btn');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const currentStreakEl = document.getElementById('current-streak');
+        const currentGoalEl = document.getElementById('current-goal');
+        const nextGoalEl = document.getElementById('next-goal');
+        const motivationTextEl = document.getElementById('motivation-text');
+        const motivationEl = document.getElementById('motivation');
+        const progressBarEl = document.getElementById('progress-bar');
+        const completedEl = document.getElementById('completed');
+        const redZoneEl = document.getElementById('red-zone');
+        const redZoneTimerEl = document.getElementById('red-zone-timer');
+        const redZoneMessageEl = document.getElementById('red-zone-message');
+        const exitRedZoneBtn = document.getElementById('exit-red-zone');
+        const playMessageBtn = document.getElementById('play-message-btn');
+        const breathingExerciseEl = document.getElementById('breathing-exercise');
+        const breathingCircleEl = document.getElementById('breathing-circle');
+        const breathingInstructionsEl = document.getElementById('breathing-instructions');
+        const exitBreathingBtn = document.getElementById('exit-breathing');
+        const messageRecorderEl = document.getElementById('message-recorder');
+        const voiceMessageBtn = document.getElementById('voice-message-btn');
+        const textMessageBtn = document.getElementById('text-message-btn');
+        const voiceRecorderPanel = document.getElementById('voice-recorder-panel');
+        const textRecorderPanel = document.getElementById('text-recorder-panel');
+        const recordBtn = document.getElementById('record-btn');
+        const playVoiceBtn = document.getElementById('play-voice-btn');
+        const voiceRecorderStatus = document.getElementById('voice-recorder-status');
+        const messageText = document.getElementById('message-text');
+        const saveMessageBtn = document.getElementById('save-message-btn');
+        const cancelRecordingBtn = document.getElementById('cancel-recording-btn');
+        const messagePlaybackEl = document.getElementById('message-playback');
+        const voicePlaybackControls = document.getElementById('voice-playback-controls');
+        const voicePlaybackBtn = document.getElementById('voice-playback-btn');
+        const voicePlaybackStatus = document.getElementById('voice-playback-status');
+        const messageDisplay = document.getElementById('message-display');
+        const closePlaybackBtn = document.getElementById('close-playback-btn');
+        const notificationEl = document.getElementById('notification');
+        const madeByEl = document.getElementById('made-by');
+        
+        // Wake-Up Mode DOM Elements
+        const wakeupModeEl = document.getElementById('wakeup-mode');
+        const exitWakeupBtn = document.getElementById('exit-wakeup');
+        const takeActionBtn = document.getElementById('take-action-btn');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const interactiveItems = document.querySelectorAll('.interactive-item');
+        const tacticCheckboxes = document.querySelectorAll('.tactic-checkbox');
+        
+        // Motivational quotes
+        const motivationalQuotes = [
+            { text: "He who conquers himself is the mightiest warrior. Your mind is the battlefield.", author: "Confucius" },
+            { text: "The unexamined life is not worth living. Question your desires, don't be enslaved by them.", author: "Socrates" },
+            { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Aristotle" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { text: "Freedom is not worth having if it does not include the freedom to make mistakes.", author: "Mahatma Gandhi" },
+            { text: "The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.", author: "Albert Camus" },
+            { text: "He who has a why to live can bear almost any how. Find your purpose, not your pleasure.", author: "Friedrich Nietzsche" },
+            { text: "The mind is everything. What you think you become. Control your thoughts, control your destiny.", author: "Buddha" },
+            { text: "I count him braver who overcomes his desires than him who conquers his enemies.", author: "Aristotle" },
+            { text: "The first and greatest victory is to conquer self. To be conquered by self is the worst shame.", author: "Plato" },
+            { text: "Real men don't let temporary pleasures control their destiny. Start your journey to greatness now.", author: "The War Room" },
+            { text: "Weakness is a choice. Strength is a habit. Which one are you choosing today?", author: "Tate Philosophy" },
+            { text: "Every second you resist, you build your empire of self-discipline. Kings don't indulge in weakness.", author: "King's Mindset" },
+            { text: "Your desire for instant gratification is what keeps you average. Break free and become legendary.", author: "Top G" },
+            { text: "Pain is temporary, but regret lasts forever. Endure the pain of discipline or suffer the pain of regret.", author: "Hustler's University" },
+            { text: "The modern world wants you weak, distracted, and complacent. Reject mediocrity. Embrace greatness.", author: "The Real World" },
+            { text: "Your mind is the most powerful weapon you possess. Don't let it be hijacked by cheap dopamine hits.", author: "Tate Speech" },
+            { text: "Every time you say no to weakness, you say yes to your future self. Build that future now.", author: "King's Code" },
+            { text: "Excuses are for the weak. Solutions are for the strong. Which side are you on?", author: "War Room Tactics" },
+            { text: "The path to greatness is paved with discipline, sacrifice, and unwavering focus. Start walking it now.", author: "Top G Mindset" }
+        ];
+        
+        // Red Zone messages
+        const redZoneMessages = [
+            "IF YOU GIVE IN NOW, YOU'RE FAILING YOUR FUTURE SELF!",
+            "EVERY TIME YOU RELAPSE, YOU PUSH SUCCESS FURTHER AWAY!",
+            "THIS WEAKNESS WILL COST YOU YOUR DREAMS AND YOUR FAMILY!",
+            "YOU'LL NEVER BE RICH IF YOU CAN'T CONTROL YOUR URGES!",
+            "YOUR COMPETITORS ARE DISCIPLINED WHILE YOU'RE INDULGING!",
+            "GIVE IN NOW AND YOU'RE CHOOSING MEDIOCRITY OVER GREATNESS!",
+            "THIS MOMENT OF WEAKNESS COULD RUIN YOUR ENTIRE FUTURE!",
+            "REAL MEN DON'T SURRENDER TO TEMPORARY PLEASURES!",
+            "YOUR FUTURE FAMILY DESERVES A STRONG MAN, NOT A WEAK ONE!",
+            "EVERY SECOND YOU RESIST BUILDS YOUR EMPIRE OF DISCIPLINE!"
+        ];
+        
+        // Timer variables
+        let timerInterval = null;
+        let timeLeft = 48 * 60 * 60; // 48 hours in seconds
+        let initialTime = 48 * 60 * 60; // 48 hours in seconds
+        let streak = 0;
+        let isRunning = false;
+        let endTime = null;
+        let disciplinedMode = false;
+        
+        // Red Zone variables
+        let redZoneInterval = null;
+        let redZoneTimeLeft = 300; // 5 minutes in seconds
+        let redZoneMessageInterval = null;
+        
+        // Breathing exercise variables
+        let breathingInterval = null;
+        let breathingStep = 0; // 0: inhale, 1: hold, 2: exhale
+        let breathingTimeLeft = 4; // Start with inhale time
+        
+        // Message recording variables
+        let messageType = 'voice'; // 'voice' or 'text'
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordedAudio = null;
+        let savedMessage = {
+            type: null,
+            content: null
+        };
+        
+        // Show made by sko_az message
+        function showMadeBy() {
+            madeByEl.classList.add('show');
+            
+            // Hide after 6 seconds
+            setTimeout(() => {
+                madeByEl.classList.remove('show');
+                madeByEl.classList.add('hide');
+                
+                // Remove from DOM after transition completes
+                setTimeout(() => {
+                    madeByEl.remove();
+                }, 500);
+            }, 6000);
+        }
+        
+        // Initialize app
+        function init() {
+            // Show made by message
+            showMadeBy();
+            
+            // Load saved data from localStorage
+            loadData();
+            
+            // Update display with loaded data
+            updateDisplay();
+            updateStreakInfo();
+            updateDisciplinedMode();
+            
+            // If the timer was running when the page was last closed, continue it
+            if (endTime && endTime > Date.now()) {
+                startTimer();
+                isRunning = true;
+                startBtn.textContent = "MISSION IN PROGRESS";
+                startBtn.disabled = true;
+            }
+            
+            // Start quote rotation
+            startQuoteRotation();
+            
+            // Update the display immediately and then every second
+            updateDisplay();
+        }
+        
+        // Load data from localStorage
+        function loadData() {
+            try {
+                const savedData = localStorage.getItem('kingTimerData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    streak = data.streak || 0;
+                    initialTime = data.initialTime || 48 * 60 * 60;
+                    timeLeft = data.timeLeft || 48 * 60 * 60;
+                    endTime = data.endTime || null;
+                    disciplinedMode = data.disciplinedMode || false;
+                    
+                    // Load saved message if available
+                    if (data.savedMessage) {
+                        savedMessage = data.savedMessage;
+                    }
+                    
+                    // If we have an end time, calculate the current timeLeft
+                    if (endTime) {
+                        const now = Date.now();
+                        if (now < endTime) {
+                            timeLeft = Math.floor((endTime - now) / 1000);
+                        } else {
+                            // If the timer has expired, trigger completion
+                            timeLeft = 0;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading data from localStorage:', e);
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            try {
+                const data = {
+                    streak,
+                    initialTime,
+                    timeLeft,
+                    endTime,
+                    disciplinedMode,
+                    savedMessage
+                };
+                localStorage.setItem('kingTimerData', JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving data to localStorage:', e);
+            }
+        }
+        
+        // Update display
+        function updateDisplay() {
+            const days = Math.floor(timeLeft / (24 * 60 * 60));
+            const hours = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60));
+            const minutes = Math.floor((timeLeft % (60 * 60)) / 60);
+            const seconds = timeLeft % 60;
+            
+            daysEl.textContent = days.toString().padStart(2, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+            
+            // Update progress bar
+            const progress = ((initialTime - timeLeft) / initialTime) * 100;
+            progressBarEl.style.width = `${progress}%`;
+            
+            // Update motivation based on time left
+            if (timeLeft < 60 * 60) {
+                updateMotivation("The final hour is where legends are made. Don't you dare give up now.", "Top G");
+            } else if (timeLeft < 24 * 60 * 60) {
+                updateMotivation("You're in the final stretch. Push through the pain and claim your victory.", "King's Mindset");
+            }
+            
+            // Save current state
+            saveData();
+        }
+        
+        // Update streak info
+        function updateStreakInfo() {
+            currentStreakEl.textContent = streak;
+            currentGoalEl.textContent = `${Math.floor(initialTime / (60 * 60))}h`;
+            nextGoalEl.textContent = `${Math.floor((initialTime * 2) / (60 * 60))}h`;
+        }
+        
+        // Update motivation
+        function updateMotivation(text, author) {
+            motivationTextEl.textContent = text;
+            document.querySelector('.motivation .author').textContent = `- ${author}`;
+        }
+        
+        // Get random motivation
+        function getRandomMotivation() {
+            const quote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            updateMotivation(quote.text, quote.author);
+        }
+        
+        // Start timer
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // Set the end time for the current countdown
+            endTime = Date.now() + (timeLeft * 1000);
+            saveData();
+            
+            timerInterval = setInterval(() => {
+                const now = Date.now();
+                
+                // Calculate remaining time in seconds
+                if (now < endTime) {
+                    timeLeft = Math.floor((endTime - now) / 1000);
+                    updateDisplay();
+                } else {
+                    // Timer has completed
+                    timeLeft = 0;
+                    updateDisplay();
+                    completeGoal();
+                }
+            }, 1000);
+        }
+        
+        // Start mission
+        function startMission() {
+            if (isRunning) return;
+            
+            isRunning = true;
+            
+            // Reset to initial values
+            streak = 0;
+            initialTime = 48 * 60 * 60;
+            timeLeft = initialTime;
+            
+            startBtn.textContent = "MISSION IN PROGRESS";
+            startBtn.disabled = true;
+            
+            showNotification("Mission started! Stay strong, King.");
+            
+            updateStreakInfo();
+            startTimer();
+            saveData();
+        }
+        
+        // Complete goal
+        function completeGoal() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            streak++;
+            initialTime *= 2;
+            timeLeft = initialTime;
+            
+            // Reset end time
+            endTime = null;
+            
+            updateDisplay();
+            updateStreakInfo();
+            
+            // Show completion message
+            completedEl.style.display = 'block';
+            setTimeout(() => {
+                completedEl.style.display = 'none';
+            }, 3000);
+            
+            showNotification("Mission accomplished! You're becoming stronger.");
+            
+            // Update motivation
+            const quote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            updateMotivation(quote.text, quote.author);
+            
+            // Save data
+            saveData();
+            
+            // Start timer for next goal
+            startTimer();
+        }
+        
+        // Reset streak
+        function resetStreak() {
+            if (confirm("Are you sure you want to reset your streak? This is a sign of weakness.")) {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+                
+                timeLeft = 48 * 60 * 60;
+                initialTime = 48 * 60 * 60;
+                streak = 0;
+                isRunning = false;
+                endTime = null;
+                
+                startBtn.textContent = "START MISSION";
+                startBtn.disabled = false;
+                
+                updateDisplay();
+                updateStreakInfo();
+                
+                updateMotivation("Failure is not final, but giving up is. Get back on your feet and fight for your greatness.", "Tate Philosophy");
+                showNotification("Streak reset. Time to start over and prove your strength.");
+                
+                // Save reset data
+                saveData();
+            }
+        }
+        
+        // Toggle Disciplined Mode
+        function toggleDisciplinedMode() {
+            disciplinedMode = !disciplinedMode;
+            updateDisciplinedMode();
+            saveData();
+            
+            if (disciplinedMode) {
+                showNotification("Disciplined Mode activated. Focus on your journey, not the timer.");
+            } else {
+                showNotification("Disciplined Mode deactivated. Timer and progress are now visible.");
+            }
+        }
+        
+        // Update Disciplined Mode display
+        function updateDisciplinedMode() {
+            if (disciplinedMode) {
+                document.body.classList.add('disciplined-mode');
+                disciplinedModeBtn.classList.add('active');
+                disciplinedModeBtn.textContent = "DISCIPLINED MODE: ON";
+            } else {
+                document.body.classList.remove('disciplined-mode');
+                disciplinedModeBtn.classList.remove('active');
+                disciplinedModeBtn.textContent = "DISCIPLINED MODE";
+            }
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notificationEl.textContent = message;
+            notificationEl.classList.add('show');
+            
+            setTimeout(() => {
+                notificationEl.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Red Zone functions
+        function activateRedZone() {
+            redZoneEl.classList.add('active');
+            redZoneTimeLeft = 300; // 5 minutes
+            updateRedZoneTimer();
+            
+            // Show play message button if there's a saved message
+            if (savedMessage.type && savedMessage.content) {
+                playMessageBtn.style.display = 'block';
+            } else {
+                playMessageBtn.style.display = 'none';
+            }
+            
+            // Start countdown
+            redZoneInterval = setInterval(() => {
+                redZoneTimeLeft--;
+                updateRedZoneTimer();
+                
+                if (redZoneTimeLeft <= 0) {
+                    exitRedZone();
+                }
+            }, 1000);
+            
+            // Start message cycling
+            cycleRedZoneMessages();
+            redZoneMessageInterval = setInterval(cycleRedZoneMessages, 3000);
+            
+            showNotification("Red Zone activated! Fight the urge!");
+        }
+        
+        function updateRedZoneTimer() {
+            const minutes = Math.floor(redZoneTimeLeft / 60);
+            const seconds = redZoneTimeLeft % 60;
+            redZoneTimerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        function cycleRedZoneMessages() {
+            const message = redZoneMessages[Math.floor(Math.random() * redZoneMessages.length)];
+            redZoneMessageEl.textContent = message;
+        }
+        
+        function exitRedZone() {
+            redZoneEl.classList.remove('active');
+            clearInterval(redZoneInterval);
+            clearInterval(redZoneMessageInterval);
+            showNotification("You conquered the urge! Stay strong.");
+        }
+        
+        // Breathing exercise functions
+        function startBreathingExercise() {
+            breathingExerciseEl.classList.add('active');
+            breathingStep = 0;
+            breathingTimeLeft = 4;
+            updateBreathingDisplay();
+            
+            breathingInterval = setInterval(() => {
+                breathingTimeLeft--;
+                
+                if (breathingTimeLeft <= 0) {
+                    breathingStep = (breathingStep + 1) % 3;
+                    
+                    if (breathingStep === 0) {
+                        breathingTimeLeft = 4;
+                    } else if (breathingStep === 1) {
+                        breathingTimeLeft = 7;
+                    } else {
+                        breathingTimeLeft = 8;
+                    }
+                }
+                
+                updateBreathingDisplay();
+            }, 1000);
+            
+            showNotification("Breathing exercise started. Focus on your breath.");
+        }
+        
+        function updateBreathingDisplay() {
+            breathingCircleEl.className = 'breathing-circle';
+            
+            if (breathingStep === 0) {
+                breathingCircleEl.classList.add('inhale');
+                breathingCircleEl.textContent = 'INHALE';
+                breathingInstructionsEl.textContent = 'Take a deep breath in through your nose for 4 seconds';
+            } else if (breathingStep === 1) {
+                breathingCircleEl.classList.add('hold');
+                breathingCircleEl.textContent = 'HOLD';
+                breathingInstructionsEl.textContent = 'Hold your breath for 7 seconds';
+            } else {
+                breathingCircleEl.classList.add('exhale');
+                breathingCircleEl.textContent = 'EXHALE';
+                breathingInstructionsEl.textContent = 'Exhale slowly through your mouth for 8 seconds';
+            }
+        }
+        
+        function exitBreathingExercise() {
+            breathingExerciseEl.classList.remove('active');
+            clearInterval(breathingInterval);
+            showNotification("Breathing exercise completed. You're in control.");
+        }
+        
+        // Message recording functions
+        function openMessageRecorder() {
+            messageRecorderEl.classList.add('active');
+            
+            // Reset recorder state
+            audioChunks = [];
+            recordedAudio = null;
+            mediaRecorder = null;
+            
+            // Set default message type
+            messageType = 'voice';
+            updateMessageTypeDisplay();
+            
+            // Reset UI
+            recordBtn.classList.remove('recording');
+            recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            playVoiceBtn.style.display = 'none';
+            voiceRecorderStatus.textContent = 'Click the microphone to start recording';
+            messageText.value = '';
+        }
+        
+        function closeMessageRecorder() {
+            messageRecorderEl.classList.remove('active');
+        }
+        
+        function setMessageType(type) {
+            messageType = type;
+            updateMessageTypeDisplay();
+        }
+        
+        function updateMessageTypeDisplay() {
+            // Update button states
+            if (messageType === 'voice') {
+                voiceMessageBtn.classList.add('active');
+                textMessageBtn.classList.remove('active');
+                voiceRecorderPanel.classList.add('active');
+                textRecorderPanel.classList.remove('active');
+            } else {
+                voiceMessageBtn.classList.remove('active');
+                textMessageBtn.classList.add('active');
+                voiceRecorderPanel.classList.remove('active');
+                textRecorderPanel.classList.add('active');
+            }
+        }
+        
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    recordedAudio = URL.createObjectURL(audioBlob);
+                    
+                    // Show play button
+                    playVoiceBtn.style.display = 'block';
+                    voiceRecorderStatus.textContent = 'Recording complete. Click play to review.';
+                    
+                    // Stop all tracks
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                mediaRecorder.start();
+                
+                // Update UI
+                recordBtn.classList.add('recording');
+                recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                voiceRecorderStatus.textContent = 'Recording... Click to stop';
+                
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                voiceRecorderStatus.textContent = 'Error: Could not access microphone. Please check permissions.';
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                
+                // Update UI
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            }
+        }
+        
+        function playRecordedAudio() {
+            if (recordedAudio) {
+                const audio = new Audio(recordedAudio);
+                audio.play();
+                
+                voiceRecorderStatus.textContent = 'Playing recording...';
+                
+                audio.onended = () => {
+                    voiceRecorderStatus.textContent = 'Recording complete. Click play to review.';
+                };
+            }
+        }
+        
+        function saveMessage() {
+            if (messageType === 'voice') {
+                if (!recordedAudio) {
+                    showNotification('Please record a voice message first.');
+                    return;
+                }
+                
+                // Convert blob URL to base64 for storage
+                fetch(recordedAudio)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            savedMessage = {
+                                type: 'voice',
+                                content: reader.result
+                            };
+                            saveData();
+                            showNotification('Voice message saved successfully!');
+                            closeMessageRecorder();
+                        };
+                        reader.readAsDataURL(blob);
+                    });
+            } else {
+                const text = messageText.value.trim();
+                if (!text) {
+                    showNotification('Please enter a text message first.');
+                    return;
+                }
+                
+                savedMessage = {
+                    type: 'text',
+                    content: text
+                };
+                saveData();
+                showNotification('Text message saved successfully!');
+                closeMessageRecorder();
+            }
+        }
+        
+        function playSavedMessage() {
+            if (!savedMessage.type || !savedMessage.content) {
+                showNotification('No saved message found.');
+                return;
+            }
+            
+            messagePlaybackEl.classList.add('active');
+            
+            if (savedMessage.type === 'voice') {
+                // Show voice controls, hide text display
+                voicePlaybackControls.style.display = 'block';
+                messageDisplay.style.display = 'none';
+                
+                // Create audio element from base64
+                const audio = new Audio(savedMessage.content);
+                
+                voicePlaybackBtn.onclick = () => {
+                    if (audio.paused) {
+                        audio.play();
+                        voicePlaybackBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        voicePlaybackStatus.textContent = 'Playing message...';
+                        
+                        audio.onended = () => {
+                            voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                            voicePlaybackStatus.textContent = 'Click to play your message';
+                        };
+                    } else {
+                        audio.pause();
+                        voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        voicePlaybackStatus.textContent = 'Click to play your message';
+                    }
+                };
+            } else {
+                // Show text display, hide voice controls
+                voicePlaybackControls.style.display = 'none';
+                messageDisplay.style.display = 'block';
+                messageDisplay.textContent = savedMessage.content;
+            }
+        }
+        
+        function closeMessagePlayback() {
+            messagePlaybackEl.classList.remove('active');
+            
+            // Reset audio playback
+            if (voicePlaybackBtn) {
+                voicePlaybackBtn.innerHTML = '<i class="fas fa-play"></i>';
+                voicePlaybackStatus.textContent = 'Click to play your message';
+            }
+        }
+        
+        // Wake-Up Mode Functions
+        function activateWakeupMode() {
+            wakeupModeEl.classList.add('active');
+            showNotification("Wake-Up Mode activated. Prepare to face the truth.");
+        }
+        
+        function exitWakeupMode() {
+            wakeupModeEl.classList.remove('active');
+            showNotification("You're awake. Now stay awake.");
+        }
+        
+        function takeAction() {
+            // Find current active tab
+            const activeTab = document.querySelector('.tab-btn.active');
+            const currentTabId = activeTab.getAttribute('data-tab');
+            
+            if (currentTabId === 'truth') {
+                // Move to psychology tab
+                document.querySelector('[data-tab="psychology"]').click();
+                showNotification("Understanding the psychology is the next step.");
+            } else if (currentTabId === 'psychology') {
+                // Move to tactics tab
+                document.querySelector('[data-tab="tactics"]').click();
+                showNotification("Now it's time to break the cycle with these tactics.");
+            } else {
+                // All tabs completed, close Wake-Up Mode
+                exitWakeupMode();
+                showNotification("You've completed Wake-Up Mode. Stay vigilant!");
+            }
+        }
+        
+        // Event listeners
+        startBtn.addEventListener('click', startMission);
+        resetBtn.addEventListener('click', resetStreak);
+        panicBtn.addEventListener('click', activateRedZone);
+        exitRedZoneBtn.addEventListener('click', exitRedZone);
+        breatheBtn.addEventListener('click', startBreathingExercise);
+        exitBreathingBtn.addEventListener('click', exitBreathingExercise);
+        motivationEl.addEventListener('click', getRandomMotivation);
+        disciplinedModeBtn.addEventListener('click', toggleDisciplinedMode);
+        recordMessageBtn.addEventListener('click', openMessageRecorder);
+        topWakeupBtn.addEventListener('click', activateWakeupMode);
+        exitWakeupBtn.addEventListener('click', exitWakeupMode);
+        takeActionBtn.addEventListener('click', takeAction);
+        
+        // Message recorder event listeners
+        voiceMessageBtn.addEventListener('click', () => setMessageType('voice'));
+        textMessageBtn.addEventListener('click', () => setMessageType('text'));
+        recordBtn.addEventListener('click', () => {
+            if (recordBtn.classList.contains('recording')) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+        playVoiceBtn.addEventListener('click', playRecordedAudio);
+        saveMessageBtn.addEventListener('click', saveMessage);
+        cancelRecordingBtn.addEventListener('click', closeMessageRecorder);
+        
+        // Message playback event listeners
+        playMessageBtn.addEventListener('click', playSavedMessage);
+        closePlaybackBtn.addEventListener('click', closeMessagePlayback);
+        
+        // Tab switching functionality for Wake-Up Mode
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                btn.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Interactive items in Wake-Up Mode
+        interactiveItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+        
+        // Tactic checkboxes
+        tacticCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    showNotification("Tactic marked as completed. Keep going!");
+                }
+            });
+        });
+        
+        // Start quote rotation
+        setInterval(() => {
+            if (!isRunning || timeLeft > 24 * 60 * 60) {
+                getRandomMotivation();
+            }
+        }, 30000);
+        
+        // Initialize app
+        init();
+    </script>
 </body>
 </html>
