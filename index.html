@@ -358,7 +358,35 @@
             border-top: 1px solid #333;
             font-size: 0.9rem;
             color: #777;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
+        .discord-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #5865F2;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: 'Roboto Condensed', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+        .discord-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+            background: #677BF4;
+        }
+        .discord-link i {
+            font-size: 1.2rem;
+        }
+        
         /* Disciplined Mode Styles */
         body.disciplined-mode .countdown,
         body.disciplined-mode .progress-container {
@@ -367,6 +395,7 @@
             margin: 0;
             overflow: hidden;
         }
+        
         /* Red Zone Styles */
         .red-zone {
             position: fixed;
@@ -448,6 +477,7 @@
         .play-message-btn:hover {
             background: #ab47bc;
         }
+        
         /* Breathing Exercise Styles */
         .breathing-exercise {
             position: fixed;
@@ -481,6 +511,21 @@
             text-transform: uppercase;
             margin-bottom: 1rem;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .breathing-mode-selector {
+            margin-bottom: 1.5rem;
+        }
+        .breathing-mode-selector select {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
         }
         .breathing-circle {
             width: 180px;
@@ -532,6 +577,7 @@
         .exit-breathing:hover {
             background: #f0f0f0;
         }
+        
         /* Message Recorder Styles */
         .message-recorder {
             position: fixed;
@@ -578,29 +624,15 @@
             line-height: 1.5;
             text-align: center;
         }
-        .message-type-selector {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .message-type-btn {
-            background: #333;
-            color: #e0e0e0;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            min-width: 150px;
+        .mobile-warning {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
             border-radius: 5px;
-        }
-        .message-type-btn.active {
-            background: #d4af37;
-            color: #000;
-        }
-        .message-type-btn:hover {
-            background: #444;
-        }
-        .message-type-btn.active:hover {
-            background: #f0d78c;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #ff7777;
+            display: none;
         }
         .recorder-panels {
             display: flex;
@@ -735,16 +767,6 @@
         }
         .cancel-recording-btn:hover {
             background: #a00000;
-        }
-        .mobile-warning {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid #ff0000;
-            border-radius: 5px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            color: #ff7777;
-            display: none;
         }
         
         /* Message Playback Styles */
@@ -1242,11 +1264,6 @@
             .recorder-instructions {
                 font-size: 1rem;
             }
-            .message-type-btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-                min-width: 120px;
-            }
             .record-btn {
                 width: 70px;
                 height: 70px;
@@ -1398,11 +1415,6 @@
             .recorder-instructions {
                 font-size: 0.9rem;
             }
-            .message-type-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-                min-width: 100px;
-            }
             .record-btn {
                 width: 60px;
                 height: 60px;
@@ -1493,8 +1505,13 @@
         </div>
     </main>
     <footer>
-        <p>© 2023 THE KING'S MINDSET | DISCIPLINE EQUALS FREEDOM</p>
+        <p>© <span id="year">2024</span> THE KING'S MINDSET | DISCIPLINE EQUALS FREEDOM</p>
+        <a href="https://discord.gg/your-invite-link" target="_blank" rel="noopener noreferrer" class="discord-link" aria-label="Join our Discord community for support and brotherhood">
+            <i class="fab fa-discord"></i>
+            JOIN THE KING'S COURT ON DISCORD
+        </a>
     </footer>
+    
     <!-- Red Zone Overlay -->
     <div class="red-zone" id="red-zone">
         <div class="red-zone-content">
@@ -1514,6 +1531,13 @@
     <div class="breathing-exercise" id="breathing-exercise">
         <div class="breathing-content">
             <h2>BREATHING EXERCISE</h2>
+            <div class="breathing-mode-selector">
+                <select id="breathing-mode">
+                    <option value="box">Box Breathing (Navy SEALs)</option>
+                    <option value="wim-hof">Wim Hof Method</option>
+                    <option value="4-7-8">4-7-8 Breathing (Calm)</option>
+                </select>
+            </div>
             <div class="breathing-circle" id="breathing-circle">
                 INHALE
             </div>
@@ -1607,7 +1631,7 @@
                     </div>
                     <div class="message-display">
                         <div class="message-lines"></div>
-                        <div id="message-text" class="message-text"></div>
+                        <div id="message-text-display" class="message-text"></div>
                     </div>
                 </div>
             </div>
@@ -1808,7 +1832,13 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
     
+    <!-- Hidden Audio for Breathing -->
+    <audio id="breathe-audio" src="BREATHE AIR - AUDIO FROM JAYUZUMI.COM.mp3" preload="auto"></audio>
+    
     <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
         // DOM Elements
         const startBtn = document.getElementById('start-btn');
         const panicBtn = document.getElementById('panic-btn');
@@ -1837,6 +1867,7 @@
         const breathingCircleEl = document.getElementById('breathing-circle');
         const breathingInstructionsEl = document.getElementById('breathing-instructions');
         const exitBreathingBtn = document.getElementById('exit-breathing');
+        const breathingModeSelect = document.getElementById('breathing-mode');
         const messageRecorderEl = document.getElementById('message-recorder');
         const recordBtn = document.getElementById('record-btn');
         const playVoiceBtn = document.getElementById('play-voice-btn');
@@ -1850,11 +1881,12 @@
         const voicePlaybackBtn = document.getElementById('voice-playback-btn');
         const voicePlaybackStatus = document.getElementById('voice-playback-status');
         const textPlaybackPanel = document.getElementById('text-playback-panel');
-        const messageDisplayText = document.getElementById('message-text');
+        const messageTextDisplay = document.getElementById('message-text-display');
         const closePlaybackBtn = document.getElementById('close-playback-btn');
         const notificationEl = document.getElementById('notification');
         const madeByEl = document.getElementById('made-by');
         const mobileWarningEl = document.getElementById('mobile-warning');
+        const breatheAudio = document.getElementById('breathe-audio');
         
         // Wake-Up Mode DOM Elements
         const wakeupModeEl = document.getElementById('wakeup-mode');
@@ -1921,6 +1953,7 @@
         let breathingInterval = null;
         let breathingStep = 0; // 0: inhale, 1: hold, 2: exhale
         let breathingTimeLeft = 4; // Start with inhale time
+        let breathingMode = 'box'; // default breathing mode
         
         // Message recording variables
         let mediaRecorder = null;
@@ -2272,24 +2305,45 @@
         }
         
         // Breathing exercise functions
+        function getBreathingTimes() {
+            switch (breathingMode) {
+                case 'box':
+                    return { inhale: 4, hold: 4, exhale: 4 };
+                case 'wim-hof':
+                    return { inhale: 30, hold: 15, exhale: 15 };
+                case '4-7-8':
+                    return { inhale: 4, hold: 7, exhale: 8 };
+                default:
+                    return { inhale: 4, hold: 4, exhale: 4 };
+            }
+        }
+        
         function startBreathingExercise() {
+            breathingMode = breathingModeSelect.value;
             breathingExerciseEl.classList.add('active');
             breathingStep = 0;
-            breathingTimeLeft = 4;
+            const times = getBreathingTimes();
+            breathingTimeLeft = times.inhale;
             updateBreathingDisplay();
+            
+            // Play the breathing audio if available
+            if (breatheAudio) {
+                breatheAudio.play().catch(e => console.log("Audio play failed:", e));
+            }
             
             breathingInterval = setInterval(() => {
                 breathingTimeLeft--;
                 
                 if (breathingTimeLeft <= 0) {
                     breathingStep = (breathingStep + 1) % 3;
+                    const times = getBreathingTimes();
                     
                     if (breathingStep === 0) {
-                        breathingTimeLeft = 4;
+                        breathingTimeLeft = times.inhale;
                     } else if (breathingStep === 1) {
-                        breathingTimeLeft = 7;
+                        breathingTimeLeft = times.hold;
                     } else {
-                        breathingTimeLeft = 8;
+                        breathingTimeLeft = times.exhale;
                     }
                 }
                 
@@ -2300,26 +2354,34 @@
         }
         
         function updateBreathingDisplay() {
+            const times = getBreathingTimes();
             breathingCircleEl.className = 'breathing-circle';
             
             if (breathingStep === 0) {
                 breathingCircleEl.classList.add('inhale');
                 breathingCircleEl.textContent = 'INHALE';
-                breathingInstructionsEl.textContent = 'Take a deep breath in through your nose for 4 seconds';
+                breathingInstructionsEl.textContent = `Take a deep breath in through your nose for ${times.inhale} seconds`;
             } else if (breathingStep === 1) {
                 breathingCircleEl.classList.add('hold');
                 breathingCircleEl.textContent = 'HOLD';
-                breathingInstructionsEl.textContent = 'Hold your breath for 7 seconds';
+                breathingInstructionsEl.textContent = `Hold your breath for ${times.hold} seconds`;
             } else {
                 breathingCircleEl.classList.add('exhale');
                 breathingCircleEl.textContent = 'EXHALE';
-                breathingInstructionsEl.textContent = 'Exhale slowly through your mouth for 8 seconds';
+                breathingInstructionsEl.textContent = `Exhale slowly through your mouth for ${times.exhale} seconds`;
             }
         }
         
         function exitBreathingExercise() {
             breathingExerciseEl.classList.remove('active');
             clearInterval(breathingInterval);
+            
+            // Pause and reset the breathing audio
+            if (breatheAudio) {
+                breatheAudio.pause();
+                breatheAudio.currentTime = 0;
+            }
+            
             showNotification("Breathing exercise completed. You're in control.");
         }
         
@@ -2547,7 +2609,7 @@
             
             if (savedMessage.text) {
                 textPlaybackPanel.style.display = 'block';
-                messageDisplayText.textContent = savedMessage.text;
+                messageTextDisplay.textContent = savedMessage.text;
             } else {
                 textPlaybackPanel.style.display = 'none';
             }
