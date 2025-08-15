@@ -33,32 +33,57 @@
             opacity: 0.15;
             z-index: -1;
         }
-        /* Made by sko_az styles */
-        .made-by {
+        
+        /* User Account Styles */
+        .user-account {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            font-size: 14px;
-            color: rgba(212, 175, 55, 0.7);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 8px 15px;
-            border-radius: 20px;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 30px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             z-index: 100;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            letter-spacing: 1px;
-            font-family: 'Roboto Condensed', sans-serif;
-            text-transform: uppercase;
+            transition: all 0.3s ease;
         }
-        .made-by.show {
-            opacity: 1;
-            transform: translateY(0);
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #f0d78c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+            font-size: 16px;
         }
-        .made-by.hide {
-            opacity: 0;
-            transform: translateY(20px);
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        .user-stats {
+            font-size: 11px;
+            color: #a0a0a0;
+        }
+        .logout-btn {
+            background: transparent;
+            border: none;
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        .logout-btn:hover {
+            color: #d4af37;
         }
         
         /* Top Wake-Up Button */
@@ -99,6 +124,29 @@
         }
         .top-wakeup-btn i {
             font-size: 16px;
+        }
+        
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .settings-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-3px);
         }
         
         header {
@@ -294,11 +342,6 @@
             color: #fff;
             animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
-        }
         .panic-btn:hover {
             background: #ff3333;
         }
@@ -358,33 +401,6 @@
             border-top: 1px solid #333;
             font-size: 0.9rem;
             color: #777;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .discord-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #5865F2;
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-family: 'Roboto Condensed', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-        }
-        .discord-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
-            background: #677BF4;
-        }
-        .discord-link i {
-            font-size: 1.2rem;
         }
         
         /* Disciplined Mode Styles */
@@ -1101,6 +1117,7 @@
             cursor: pointer;
         }
         
+        /* Notification */
         .notification {
             position: fixed;
             top: 20px;
@@ -1119,13 +1136,364 @@
             transform: translateX(0);
         }
         
+        /* User Account Modal */
+        .user-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .user-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #333;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-header h2 {
+            font-size: 2rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .modal-header p {
+            color: #a0a0a0;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #e0e0e0;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1rem;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 1rem;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #a0a0a0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close:hover {
+            color: #d4af37;
+        }
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: #a0a0a0;
+        }
+        .switch-form a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Settings Modal */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .settings-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .settings-content {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #333;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .settings-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .settings-header h2 {
+            font-size: 2rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+        .settings-section h3 {
+            font-size: 1.3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        .settings-label {
+            color: #e0e0e0;
+        }
+        .settings-control {
+            display: flex;
+            align-items: center;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: #333;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .toggle-switch.active {
+            background: #d4af37;
+        }
+        .toggle-switch::after {
+            content: "";
+            position: absolute;
+            top: 2.5px;
+            left: 2.5px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(25px);
+        }
+        .settings-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .settings-actions button {
+            flex: 1;
+        }
+        .danger-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .danger-btn:hover {
+            background: #a00000;
+        }
+        
+        /* Statistics Modal */
+        .stats-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .stats-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .stats-content {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #333;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .stats-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .stats-header h2 {
+            font-size: 2rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .stats-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        /* Red Zone Distraction Exercise */
+        .distraction-exercise {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .distraction-exercise h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .math-problem {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .math-answer {
+            width: 100px;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+        }
+        .check-answer {
+            margin-top: 1rem;
+            background: #4caf50;
+            color: #fff;
+        }
+        .check-answer:hover {
+            background: #66bb6a;
+        }
+        
         /* Media Queries for Responsive Design */
         @media (max-width: 768px) {
+            .user-account {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+            }
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+            .user-name {
+                font-size: 12px;
+            }
+            .user-stats {
+                font-size: 10px;
+            }
             .top-wakeup-btn {
                 top: 10px;
                 right: 10px;
                 padding: 10px 15px;
                 font-size: 12px;
+            }
+            .settings-btn {
+                top: 65px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
             }
             
             h1 {
@@ -1207,13 +1575,6 @@
                 font-size: 1.1rem;
             }
             
-            .made-by {
-                bottom: 20px;
-                right: 20px;
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-            
             .notification {
                 top: 10px;
                 right: 10px;
@@ -1281,14 +1642,34 @@
                 padding: 0.8rem 1.5rem;
                 font-size: 1rem;
             }
+            
+            /* Stats Responsive */
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
+            .user-account {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .user-info {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+            }
             .top-wakeup-btn {
                 top: 5px;
                 right: 5px;
                 padding: 8px 12px;
                 font-size: 10px;
+            }
+            .settings-btn {
+                top: 55px;
+                right: 5px;
+                width: 35px;
+                height: 35px;
             }
             
             h1 {
@@ -1356,13 +1737,6 @@
             
             .breathing-instructions {
                 font-size: 1rem;
-            }
-            
-            .made-by {
-                bottom: 15px;
-                right: 15px;
-                font-size: 11px;
-                padding: 5px 10px;
             }
             
             .notification {
@@ -1436,13 +1810,27 @@
     </style>
 </head>
 <body>
+    <!-- User Account -->
+    <div class="user-account" id="user-account" style="display: none;">
+        <div class="user-avatar" id="user-avatar">U</div>
+        <div class="user-info">
+            <div class="user-name" id="user-name">User</div>
+            <div class="user-stats" id="user-stats">Day 1</div>
+        </div>
+        <button class="logout-btn" id="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+    
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settings-btn">
+        <i class="fas fa-cog"></i>
+    </button>
+    
     <!-- Top Wake-Up Button -->
     <button id="top-wakeup-btn" class="top-wakeup-btn">
         <i class="fas fa-fire"></i> WAKE-UP MODE
     </button>
-    
-    <!-- Made by sko_az element -->
-    <div class="made-by" id="made-by">made by sko_az</div>
     
     <header>
         <h1>QUIT PORN. BECOME A KING.</h1>
@@ -1501,15 +1889,12 @@
                 <button id="reset-btn" class="reset-btn">RESET STREAK</button>
                 <button id="disciplined-mode-btn" class="disciplined-mode-btn">DISCIPLINED MODE</button>
                 <button id="record-message-btn" class="record-message-btn">RECORD MESSAGE</button>
+                <button id="stats-btn" class="stats-btn">STATISTICS</button>
             </div>
         </div>
     </main>
     <footer>
         <p>© <span id="year">2024</span> THE KING'S MINDSET | DISCIPLINE EQUALS FREEDOM</p>
-        <a href="https://discord.gg/your-invite-link" target="_blank" rel="noopener noreferrer" class="discord-link" aria-label="Join our Discord community for support and brotherhood">
-            <i class="fab fa-discord"></i>
-            JOIN THE KING'S COURT ON DISCORD
-        </a>
     </footer>
     
     <!-- Red Zone Overlay -->
@@ -1519,6 +1904,13 @@
             <div class="red-zone-timer" id="red-zone-timer">05:00</div>
             <div class="red-zone-message" id="red-zone-message">
                 IF YOU GIVE IN NOW, YOU'RE FAILING YOUR FUTURE SELF!
+            </div>
+            <div class="distraction-exercise">
+                <h3>DISTRACTION EXERCISE</h3>
+                <p>Solve this math problem to break the thought pattern:</p>
+                <div class="math-problem" id="math-problem">12 × 15 = ?</div>
+                <input type="number" class="math-answer" id="math-answer" placeholder="Answer">
+                <button class="check-answer" id="check-answer">CHECK ANSWER</button>
             </div>
             <div class="red-zone-controls">
                 <button id="play-message-btn" class="play-message-btn" style="display: none;">PLAY MY MESSAGE</button>
@@ -1536,6 +1928,8 @@
                     <option value="box">Box Breathing (Navy SEALs)</option>
                     <option value="wim-hof">Wim Hof Method</option>
                     <option value="4-7-8">4-7-8 Breathing (Calm)</option>
+                    <option value="coherent">Coherent Breathing</option>
+                    <option value="resonance">Resonance Breathing</option>
                 </select>
             </div>
             <div class="breathing-circle" id="breathing-circle">
@@ -1654,6 +2048,7 @@
                 <button class="tab-btn active" data-tab="truth">RAW TRUTH</button>
                 <button class="tab-btn" data-tab="psychology">PSYCHOLOGY</button>
                 <button class="tab-btn" data-tab="tactics">BREAK THE CYCLE</button>
+                <button class="tab-btn" data-tab="science">SCIENCE</button>
             </div>
             
             <div class="tab-content active" id="truth-tab">
@@ -1822,9 +2217,202 @@
                 </div>
             </div>
             
+            <div class="tab-content" id="science-tab">
+                <h3>THE SCIENCE OF ADDICTION AND RECOVERY</h3>
+                <div class="psychology-item interactive-item" id="science1">
+                    <h4>Neuroplasticity: Your Brain Can Heal</h4>
+                    <p>Science confirms your brain can rewire itself. Neuroplasticity means you can create new neural pathways and weaken old ones.</p>
+                    <div class="interactive-content">
+                        <p>Every time you resist temptation, you strengthen the neural pathway for self-control. Every time you give in, you strengthen the addiction pathway. This is why consistency is crucial. Research shows that after 90 days of abstinence, the brain begins to show significant recovery in the prefrontal cortex - the region responsible for decision-making and impulse control. After 6 months, brain scans show nearly complete normalization of dopamine receptors. Your brain has an incredible capacity to heal, but it requires consistent action on your part.</p>
+                    </div>
+                </div>
+                <div class="psychology-item interactive-item" id="science2">
+                    <h4>The Dopamine Fast: Reset Your Reward System</h4>
+                    <p>Periodically abstaining from all high-dopamine activities (not just porn) can help reset your brain's reward sensitivity.</p>
+                    <div class="interactive-content">
+                        <p>A dopamine fast involves abstaining from porn, social media, junk food, video games, and other instant gratification sources for 24-48 hours. This practice helps your brain regain sensitivity to natural rewards. During a dopamine fast, you might feel bored or irritable initially - this is your brain protesting the lack of stimulation. By the end, you'll find simple pleasures more satisfying. Incorporate monthly dopamine fasts into your recovery plan to keep your reward system balanced and prevent new addictions from forming.</p>
+                    </div>
+                </div>
+                <div class="psychology-item interactive-item" id="science3">
+                    <h4>The Role of Testosterone</h4>
+                    <p>Porn addiction lowers testosterone levels, which affects motivation, confidence, and overall vitality.</p>
+                    <div class="interactive-content">
+                        <p>Studies show that men who quit porn experience a 15-20% increase in testosterone levels within just one week. This surge in testosterone improves mood, energy, focus, and drive - all essential for recovery. After 90 days of abstinence, testosterone levels typically return to optimal ranges. To accelerate this process, incorporate strength training, adequate sleep, and a nutrient-dense diet. Avoid xenoestrogens (chemicals that mimic estrogen) found in plastics and processed foods. Higher testosterone makes recovery easier by naturally increasing your motivation and willpower.</p>
+                    </div>
+                </div>
+                <div class="psychology-item interactive-item" id="science4">
+                    <h4>The Science of Habit Formation</h4>
+                    <p>Understanding how habits work gives you power to change them. Every habit follows a three-step loop: cue, routine, reward.</p>
+                    <div class="interactive-content">
+                        <p>To break a porn habit, identify your cues (triggers like boredom, stress, loneliness). Then replace the routine (viewing porn) with a healthier alternative that provides a similar reward. The key is finding a replacement that satisfies the same underlying need. If you use porn to escape stress, replace it with meditation or exercise. If you use it out of boredom, replace it with reading or learning a skill. By keeping the cue and reward but changing the routine, you can effectively rewire the habit loop. This approach is far more effective than simply trying to resist temptation through willpower alone.</p>
+                    </div>
+                </div>
+                <div class="psychology-item interactive-item" id="science5">
+                    <h4>The Window of Opportunity</h4>
+                    <p>Science shows that the first 15 minutes of an urge is your critical window to take action before your rational brain is hijacked.</p>
+                    <div class="interactive-content">
+                        <p>When an urge strikes, your limbic system (emotional brain) activates, but your prefrontal cortex (rational brain) can still intervene for about 15 minutes. After this window, the emotional brain takes over, making rational decision-making nearly impossible. This is why immediate action is crucial. Have a pre-planned emergency response: when you feel an urge, immediately do 20 pushups, take a cold shower, or call your accountability partner. These actions engage your rational brain and prevent the emotional brain from hijacking your decision-making process. Mastering this 15-minute window is essential for long-term success.</p>
+                    </div>
+                </div>
+            </div>
+            
             <div class="wakeup-controls">
                 <button id="exit-wakeup" class="exit-wakeup">I'M AWAKE NOW</button>
                 <button id="take-action-btn" class="take-action-btn">TAKE ACTION</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Account Modal -->
+    <div class="user-modal" id="login-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-login-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>WELCOME, KING</h2>
+                <p>Create your account to begin your journey</p>
+            </div>
+            <div id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
+                </div>
+                <div class="modal-actions">
+                    <button id="login-btn" class="save-message-btn">LOGIN</button>
+                </div>
+                <div class="switch-form">
+                    Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a>
+                </div>
+            </div>
+            <div id="signup-form" style="display: none;">
+                <div class="form-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Choose a password">
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" placeholder="Confirm your password">
+                </div>
+                <div class="modal-actions">
+                    <button id="signup-btn" class="save-message-btn">CREATE ACCOUNT</button>
+                </div>
+                <div class="switch-form">
+                    Already have an account? <a href="#" id="switch-to-login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settings-modal">
+        <div class="settings-content">
+            <button class="modal-close" id="close-settings-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="settings-header">
+                <h2>SETTINGS</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Notifications</h3>
+                <div class="settings-item">
+                    <div class="settings-label">Daily Reminders</div>
+                    <div class="settings-control">
+                        <div class="toggle-switch" id="daily-reminders-toggle"></div>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-label">Milestone Alerts</div>
+                    <div class="settings-control">
+                        <div class="toggle-switch active" id="milestone-alerts-toggle"></div>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-label">Motivational Messages</div>
+                    <div class="settings-control">
+                        <div class="toggle-switch active" id="motivational-messages-toggle"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Privacy</h3>
+                <div class="settings-item">
+                    <div class="settings-label">Save Data Locally</div>
+                    <div class="settings-control">
+                        <div class="toggle-switch active" id="save-data-toggle"></div>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-label">Clear All Data</div>
+                    <div class="settings-control">
+                        <button class="danger-btn" id="clear-data-btn">CLEAR</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Account</h3>
+                <div class="settings-item">
+                    <div class="settings-label">Change Password</div>
+                    <div class="settings-control">
+                        <button id="change-password-btn">CHANGE</button>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-label">Delete Account</div>
+                    <div class="settings-control">
+                        <button class="danger-btn" id="delete-account-btn">DELETE</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-actions">
+                <button id="save-settings-btn" class="save-message-btn">SAVE SETTINGS</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistics Modal -->
+    <div class="stats-modal" id="stats-modal">
+        <div class="stats-content">
+            <button class="modal-close" id="close-stats-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="stats-header">
+                <h2>YOUR PROGRESS</h2>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-days">0</div>
+                    <div class="stat-label">Total Days</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="longest-streak">0</div>
+                    <div class="stat-label">Longest Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="goals-completed">0</div>
+                    <div class="stat-label">Goals Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="relapses">0</div>
+                    <div class="stat-label">Relapses</div>
+                </div>
+            </div>
+            
+            <div class="stats-actions">
+                <button id="export-stats-btn" class="save-message-btn">EXPORT STATS</button>
             </div>
         </div>
     </div>
@@ -1846,6 +2434,7 @@
         const resetBtn = document.getElementById('reset-btn');
         const disciplinedModeBtn = document.getElementById('disciplined-mode-btn');
         const recordMessageBtn = document.getElementById('record-message-btn');
+        const statsBtn = document.getElementById('stats-btn');
         const topWakeupBtn = document.getElementById('top-wakeup-btn');
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
@@ -1884,9 +2473,56 @@
         const messageTextDisplay = document.getElementById('message-text-display');
         const closePlaybackBtn = document.getElementById('close-playback-btn');
         const notificationEl = document.getElementById('notification');
-        const madeByEl = document.getElementById('made-by');
         const mobileWarningEl = document.getElementById('mobile-warning');
         const breatheAudio = document.getElementById('breathe-audio');
+        
+        // User Account DOM Elements
+        const userAccountEl = document.getElementById('user-account');
+        const userAvatarEl = document.getElementById('user-avatar');
+        const userNameEl = document.getElementById('user-name');
+        const userStatsEl = document.getElementById('user-stats');
+        const logoutBtn = document.getElementById('logout-btn');
+        const settingsBtn = document.getElementById('settings-btn');
+        const loginModalEl = document.getElementById('login-modal');
+        const closeLoginModalBtn = document.getElementById('close-login-modal');
+        const loginFormEl = document.getElementById('login-form');
+        const signupFormEl = document.getElementById('signup-form');
+        const loginUsernameEl = document.getElementById('login-username');
+        const loginPasswordEl = document.getElementById('login-password');
+        const loginBtn = document.getElementById('login-btn');
+        const signupUsernameEl = document.getElementById('signup-username');
+        const signupPasswordEl = document.getElementById('signup-password');
+        const signupConfirmEl = document.getElementById('signup-confirm');
+        const signupBtn = document.getElementById('signup-btn');
+        const switchToSignupEl = document.getElementById('switch-to-signup');
+        const switchToLoginEl = document.getElementById('switch-to-login');
+        
+        // Settings Modal DOM Elements
+        const settingsModalEl = document.getElementById('settings-modal');
+        const closeSettingsModalBtn = document.getElementById('close-settings-modal');
+        const dailyRemindersToggle = document.getElementById('daily-reminders-toggle');
+        const milestoneAlertsToggle = document.getElementById('milestone-alerts-toggle');
+        const motivationalMessagesToggle = document.getElementById('motivational-messages-toggle');
+        const saveDataToggle = document.getElementById('save-data-toggle');
+        const clearDataBtn = document.getElementById('clear-data-btn');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        const saveSettingsBtn = document.getElementById('save-settings-btn');
+        
+        // Statistics Modal DOM Elements
+        const statsModalEl = document.getElementById('stats-modal');
+        const closeStatsModalBtn = document.getElementById('close-stats-modal');
+        const totalDaysEl = document.getElementById('total-days');
+        const longestStreakEl = document.getElementById('longest-streak');
+        const goalsCompletedEl = document.getElementById('goals-completed');
+        const relapsesEl = document.getElementById('relapses');
+        const exportStatsBtn = document.getElementById('export-stats-btn');
+        
+        // Red Zone Distraction Exercise
+        const mathProblemEl = document.getElementById('math-problem');
+        const mathAnswerEl = document.getElementById('math-answer');
+        const checkAnswerBtn = document.getElementById('check-answer');
+        let currentMathAnswer = 0;
         
         // Wake-Up Mode DOM Elements
         const wakeupModeEl = document.getElementById('wakeup-mode');
@@ -1944,6 +2580,24 @@
         let endTime = null;
         let disciplinedMode = false;
         
+        // User Account variables
+        let currentUser = null;
+        let users = [];
+        let settings = {
+            dailyReminders: false,
+            milestoneAlerts: true,
+            motivationalMessages: true,
+            saveData: true
+        };
+        
+        // Statistics variables
+        let stats = {
+            totalDays: 0,
+            longestStreak: 0,
+            goalsCompleted: 0,
+            relapses: 0
+        };
+        
         // Red Zone variables
         let redZoneInterval = null;
         let redZoneTimeLeft = 300; // 5 minutes in seconds
@@ -1966,34 +2620,28 @@
             text: null
         };
         
-        // Show made by sko_az message
-        function showMadeBy() {
-            madeByEl.classList.add('show');
-            
-            // Hide after 6 seconds
-            setTimeout(() => {
-                madeByEl.classList.remove('show');
-                madeByEl.classList.add('hide');
-                
-                // Remove from DOM after transition completes
-                setTimeout(() => {
-                    madeByEl.remove();
-                }, 500);
-            }, 6000);
-        }
+        // Notification variables
+        let notificationPermission = false;
+        let dailyReminderInterval = null;
+        let motivationalMessageInterval = null;
         
         // Initialize app
         function init() {
-            // Show made by message
-            showMadeBy();
-            
             // Load saved data from localStorage
             loadData();
+            
+            // Check if user is logged in
+            if (!currentUser) {
+                showLoginModal();
+            } else {
+                updateUserAccountDisplay();
+            }
             
             // Update display with loaded data
             updateDisplay();
             updateStreakInfo();
             updateDisciplinedMode();
+            updateSettingsToggles();
             
             // If the timer was running when the page was last closed, continue it
             if (endTime && endTime > Date.now()) {
@@ -2009,39 +2657,79 @@
             // Update the display immediately and then every second
             updateDisplay();
             
+            // Request notification permission
+            requestNotificationPermission();
+            
             // Check if mobile device
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 mobileWarningEl.style.display = 'block';
+            }
+            
+            // Start daily reminders if enabled
+            if (settings.dailyReminders) {
+                startDailyReminders();
+            }
+            
+            // Start motivational messages if enabled
+            if (settings.motivationalMessages) {
+                startMotivationalMessages();
             }
         }
         
         // Load data from localStorage
         function loadData() {
             try {
-                const savedData = localStorage.getItem('kingTimerData');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    streak = data.streak || 0;
-                    initialTime = data.initialTime || 48 * 60 * 60;
-                    timeLeft = data.timeLeft || 48 * 60 * 60;
-                    endTime = data.endTime || null;
-                    disciplinedMode = data.disciplinedMode || false;
-                    
-                    // Load saved message if available
-                    if (data.savedMessage) {
-                        savedMessage = data.savedMessage;
-                    }
-                    
-                    // If we have an end time, calculate the current timeLeft
-                    if (endTime) {
-                        const now = Date.now();
-                        if (now < endTime) {
-                            timeLeft = Math.floor((endTime - now) / 1000);
-                        } else {
-                            // If the timer has expired, trigger completion
-                            timeLeft = 0;
+                // Load users
+                const savedUsers = localStorage.getItem('kingUsers');
+                if (savedUsers) {
+                    users = JSON.parse(savedUsers);
+                }
+                
+                // Load current user
+                const savedCurrentUser = localStorage.getItem('kingCurrentUser');
+                if (savedCurrentUser) {
+                    currentUser = JSON.parse(savedCurrentUser);
+                }
+                
+                // Load user data
+                if (currentUser) {
+                    const userData = localStorage.getItem(`kingUserData_${currentUser.username}`);
+                    if (userData) {
+                        const data = JSON.parse(userData);
+                        streak = data.streak || 0;
+                        initialTime = data.initialTime || 48 * 60 * 60;
+                        timeLeft = data.timeLeft || 48 * 60 * 60;
+                        endTime = data.endTime || null;
+                        disciplinedMode = data.disciplinedMode || false;
+                        stats = data.stats || {
+                            totalDays: 0,
+                            longestStreak: 0,
+                            goalsCompleted: 0,
+                            relapses: 0
+                        };
+                        
+                        // Load saved message if available
+                        if (data.savedMessage) {
+                            savedMessage = data.savedMessage;
+                        }
+                        
+                        // If we have an end time, calculate the current timeLeft
+                        if (endTime) {
+                            const now = Date.now();
+                            if (now < endTime) {
+                                timeLeft = Math.floor((endTime - now) / 1000);
+                            } else {
+                                // If the timer has expired, trigger completion
+                                timeLeft = 0;
+                            }
                         }
                     }
+                }
+                
+                // Load settings
+                const savedSettings = localStorage.getItem('kingSettings');
+                if (savedSettings) {
+                    settings = JSON.parse(savedSettings);
                 }
             } catch (e) {
                 console.error('Error loading data from localStorage:', e);
@@ -2051,15 +2739,28 @@
         // Save data to localStorage
         function saveData() {
             try {
-                const data = {
-                    streak,
-                    initialTime,
-                    timeLeft,
-                    endTime,
-                    disciplinedMode,
-                    savedMessage
-                };
-                localStorage.setItem('kingTimerData', JSON.stringify(data));
+                // Save users
+                localStorage.setItem('kingUsers', JSON.stringify(users));
+                
+                // Save current user
+                if (currentUser) {
+                    localStorage.setItem('kingCurrentUser', JSON.stringify(currentUser));
+                    
+                    // Save user data
+                    const data = {
+                        streak,
+                        initialTime,
+                        timeLeft,
+                        endTime,
+                        disciplinedMode,
+                        stats,
+                        savedMessage
+                    };
+                    localStorage.setItem(`kingUserData_${currentUser.username}`, JSON.stringify(data));
+                }
+                
+                // Save settings
+                localStorage.setItem('kingSettings', JSON.stringify(settings));
             } catch (e) {
                 console.error('Error saving data to localStorage:', e);
             }
@@ -2086,6 +2787,12 @@
                 updateMotivation("The final hour is where legends are made. Don't you dare give up now.", "Top G");
             } else if (timeLeft < 24 * 60 * 60) {
                 updateMotivation("You're in the final stretch. Push through the pain and claim your victory.", "King's Mindset");
+            }
+            
+            // Update user stats
+            if (currentUser) {
+                const currentDay = Math.floor((initialTime - timeLeft) / (24 * 60 * 60)) + 1;
+                userStatsEl.textContent = `Day ${currentDay}`;
             }
             
             // Save current state
@@ -2168,11 +2875,18 @@
             initialTime *= 2;
             timeLeft = initialTime;
             
+            // Update statistics
+            stats.goalsCompleted++;
+            if (streak > stats.longestStreak) {
+                stats.longestStreak = streak;
+            }
+            
             // Reset end time
             endTime = null;
             
             updateDisplay();
             updateStreakInfo();
+            updateStatistics();
             
             // Show completion message
             completedEl.style.display = 'block';
@@ -2181,6 +2895,11 @@
             }, 3000);
             
             showNotification("Mission accomplished! You're becoming stronger.");
+            
+            // Send milestone notification if enabled
+            if (settings.milestoneAlerts && notificationPermission) {
+                sendNotification("Mission Accomplished!", "You've completed another goal. Keep pushing forward!");
+            }
             
             // Update motivation
             const quote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
@@ -2200,6 +2919,9 @@
                     clearInterval(timerInterval);
                 }
                 
+                // Update statistics
+                stats.relapses++;
+                
                 timeLeft = 48 * 60 * 60;
                 initialTime = 48 * 60 * 60;
                 streak = 0;
@@ -2211,6 +2933,7 @@
                 
                 updateDisplay();
                 updateStreakInfo();
+                updateStatistics();
                 
                 updateMotivation("Failure is not final, but giving up is. Get back on your feet and fight for your greatness.", "Tate Philosophy");
                 showNotification("Streak reset. Time to start over and prove your strength.");
@@ -2256,11 +2979,76 @@
             }, 3000);
         }
         
+        // Request notification permission
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    notificationPermission = permission === 'granted';
+                });
+            }
+        }
+        
+        // Send browser notification
+        function sendNotification(title, body) {
+            if (notificationPermission && 'Notification' in window) {
+                new Notification(title, {
+                    body: body,
+                    icon: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'
+                });
+            }
+        }
+        
+        // Start daily reminders
+        function startDailyReminders() {
+            if (dailyReminderInterval) {
+                clearInterval(dailyReminderInterval);
+            }
+            
+            // Send reminder at 9 AM every day
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(9, 0, 0, 0);
+            
+            const timeUntilTomorrow = tomorrow - now;
+            
+            dailyReminderInterval = setTimeout(() => {
+                if (settings.dailyReminders && notificationPermission) {
+                    sendNotification("Daily Reminder", "Stay strong today! Every day without porn is a victory.");
+                }
+                
+                // Set up recurring daily reminders
+                setInterval(() => {
+                    if (settings.dailyReminders && notificationPermission) {
+                        sendNotification("Daily Reminder", "Stay strong today! Every day without porn is a victory.");
+                    }
+                }, 24 * 60 * 60 * 1000); // 24 hours
+            }, timeUntilTomorrow);
+        }
+        
+        // Start motivational messages
+        function startMotivationalMessages() {
+            if (motivationalMessageInterval) {
+                clearInterval(motivationalMessageInterval);
+            }
+            
+            // Send motivational message every 4 hours
+            motivationalMessageInterval = setInterval(() => {
+                if (settings.motivationalMessages && notificationPermission) {
+                    const quote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+                    sendNotification("Motivational Message", `${quote.text} - ${quote.author}`);
+                }
+            }, 4 * 60 * 60 * 1000); // 4 hours
+        }
+        
         // Red Zone functions
         function activateRedZone() {
             redZoneEl.classList.add('active');
             redZoneTimeLeft = 300; // 5 minutes
             updateRedZoneTimer();
+            
+            // Generate math problem
+            generateMathProblem();
             
             // Show play message button if there's a saved message
             if (savedMessage.voice || savedMessage.text) {
@@ -2304,6 +3092,47 @@
             showNotification("You conquered the urge! Stay strong.");
         }
         
+        // Generate math problem for distraction
+        function generateMathProblem() {
+            const operations = ['+', '-', '×'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            let num1, num2, answer;
+            
+            switch (operation) {
+                case '+':
+                    num1 = Math.floor(Math.random() * 50) + 1;
+                    num2 = Math.floor(Math.random() * 50) + 1;
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    num1 = Math.floor(Math.random() * 50) + 20;
+                    num2 = Math.floor(Math.random() * 20) + 1;
+                    answer = num1 - num2;
+                    break;
+                case '×':
+                    num1 = Math.floor(Math.random() * 12) + 1;
+                    num2 = Math.floor(Math.random() * 12) + 1;
+                    answer = num1 * num2;
+                    break;
+            }
+            
+            mathProblemEl.textContent = `${num1} ${operation} ${num2} = ?`;
+            currentMathAnswer = answer;
+            mathAnswerEl.value = '';
+        }
+        
+        function checkMathAnswer() {
+            const userAnswer = parseInt(mathAnswerEl.value);
+            if (userAnswer === currentMathAnswer) {
+                showNotification("Correct! You're regaining control.");
+                generateMathProblem();
+            } else {
+                showNotification("Try again. Focus!");
+                mathAnswerEl.value = '';
+                mathAnswerEl.focus();
+            }
+        }
+        
         // Breathing exercise functions
         function getBreathingTimes() {
             switch (breathingMode) {
@@ -2313,6 +3142,10 @@
                     return { inhale: 30, hold: 15, exhale: 15 };
                 case '4-7-8':
                     return { inhale: 4, hold: 7, exhale: 8 };
+                case 'coherent':
+                    return { inhale: 5, hold: 0, exhale: 5 };
+                case 'resonance':
+                    return { inhale: 6, hold: 0, exhale: 6 };
                 default:
                     return { inhale: 4, hold: 4, exhale: 4 };
             }
@@ -2362,9 +3195,17 @@
                 breathingCircleEl.textContent = 'INHALE';
                 breathingInstructionsEl.textContent = `Take a deep breath in through your nose for ${times.inhale} seconds`;
             } else if (breathingStep === 1) {
-                breathingCircleEl.classList.add('hold');
-                breathingCircleEl.textContent = 'HOLD';
-                breathingInstructionsEl.textContent = `Hold your breath for ${times.hold} seconds`;
+                if (times.hold > 0) {
+                    breathingCircleEl.classList.add('hold');
+                    breathingCircleEl.textContent = 'HOLD';
+                    breathingInstructionsEl.textContent = `Hold your breath for ${times.hold} seconds`;
+                } else {
+                    // Skip hold step if time is 0
+                    breathingStep = 2;
+                    breathingTimeLeft = times.exhale;
+                    updateBreathingDisplay();
+                    return;
+                }
             } else {
                 breathingCircleEl.classList.add('exhale');
                 breathingCircleEl.textContent = 'EXHALE';
@@ -2625,6 +3466,287 @@
             }
         }
         
+        // User Account functions
+        function showLoginModal() {
+            loginModalEl.classList.add('active');
+        }
+        
+        function hideLoginModal() {
+            loginModalEl.classList.remove('active');
+        }
+        
+        function switchToSignup() {
+            loginFormEl.style.display = 'none';
+            signupFormEl.style.display = 'block';
+        }
+        
+        function switchToLogin() {
+            loginFormEl.style.display = 'block';
+            signupFormEl.style.display = 'none';
+        }
+        
+        function login() {
+            const username = loginUsernameEl.value.trim();
+            const password = loginPasswordEl.value.trim();
+            
+            if (!username || !password) {
+                showNotification('Please enter both username and password.');
+                return;
+            }
+            
+            // Find user
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                saveData();
+                updateUserAccountDisplay();
+                hideLoginModal();
+                showNotification('Login successful! Welcome back.');
+            } else {
+                showNotification('Invalid username or password.');
+            }
+        }
+        
+        function signup() {
+            const username = signupUsernameEl.value.trim();
+            const password = signupPasswordEl.value.trim();
+            const confirm = signupConfirmEl.value.trim();
+            
+            if (!username || !password || !confirm) {
+                showNotification('Please fill in all fields.');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showNotification('Passwords do not match.');
+                return;
+            }
+            
+            // Check if username already exists
+            if (users.some(u => u.username === username)) {
+                showNotification('Username already exists.');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                username,
+                password,
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            
+            // Initialize user data
+            const userData = {
+                streak: 0,
+                initialTime: 48 * 60 * 60,
+                timeLeft: 48 * 60 * 60,
+                endTime: null,
+                disciplinedMode: false,
+                stats: {
+                    totalDays: 0,
+                    longestStreak: 0,
+                    goalsCompleted: 0,
+                    relapses: 0
+                },
+                savedMessage: {
+                    voice: null,
+                    text: null
+                }
+            };
+            
+            localStorage.setItem(`kingUserData_${username}`, JSON.stringify(userData));
+            
+            saveData();
+            updateUserAccountDisplay();
+            hideLoginModal();
+            showNotification('Account created successfully! Welcome to the journey.');
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('kingCurrentUser');
+            userAccountEl.style.display = 'none';
+            showLoginModal();
+            showNotification('You have been logged out.');
+        }
+        
+        function updateUserAccountDisplay() {
+            if (currentUser) {
+                userAccountEl.style.display = 'flex';
+                userAvatarEl.textContent = currentUser.username.charAt(0).toUpperCase();
+                userNameEl.textContent = currentUser.username;
+                
+                // Calculate current day
+                const currentDay = Math.floor((initialTime - timeLeft) / (24 * 60 * 60)) + 1;
+                userStatsEl.textContent = `Day ${currentDay}`;
+            } else {
+                userAccountEl.style.display = 'none';
+            }
+        }
+        
+        // Settings functions
+        function showSettingsModal() {
+            settingsModalEl.classList.add('active');
+        }
+        
+        function hideSettingsModal() {
+            settingsModalEl.classList.remove('active');
+        }
+        
+        function updateSettingsToggles() {
+            dailyRemindersToggle.classList.toggle('active', settings.dailyReminders);
+            milestoneAlertsToggle.classList.toggle('active', settings.milestoneAlerts);
+            motivationalMessagesToggle.classList.toggle('active', settings.motivationalMessages);
+            saveDataToggle.classList.toggle('active', settings.saveData);
+        }
+        
+        function toggleSetting(toggleElement, settingName) {
+            toggleElement.classList.toggle('active');
+            settings[settingName] = toggleElement.classList.contains('active');
+            
+            // Apply setting changes
+            if (settingName === 'dailyReminders') {
+                if (settings.dailyReminders) {
+                    startDailyReminders();
+                } else if (dailyReminderInterval) {
+                    clearInterval(dailyReminderInterval);
+                    dailyReminderInterval = null;
+                }
+            } else if (settingName === 'motivationalMessages') {
+                if (settings.motivationalMessages) {
+                    startMotivationalMessages();
+                } else if (motivationalMessageInterval) {
+                    clearInterval(motivationalMessageInterval);
+                    motivationalMessageInterval = null;
+                }
+            }
+        }
+        
+        function saveSettings() {
+            saveData();
+            hideSettingsModal();
+            showNotification('Settings saved successfully.');
+        }
+        
+        function clearData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                // Clear user data
+                if (currentUser) {
+                    localStorage.removeItem(`kingUserData_${currentUser.username}`);
+                }
+                
+                // Reset all data
+                streak = 0;
+                initialTime = 48 * 60 * 60;
+                timeLeft = 48 * 60 * 60;
+                endTime = null;
+                disciplinedMode = false;
+                stats = {
+                    totalDays: 0,
+                    longestStreak: 0,
+                    goalsCompleted: 0,
+                    relapses: 0
+                };
+                savedMessage = {
+                    voice: null,
+                    text: null
+                };
+                
+                // Stop timer if running
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                
+                isRunning = false;
+                startBtn.textContent = "START MISSION";
+                startBtn.disabled = false;
+                
+                updateDisplay();
+                updateStreakInfo();
+                updateStatistics();
+                
+                showNotification('All data has been cleared.');
+            }
+        }
+        
+        function changePassword() {
+            const newPassword = prompt('Enter your new password:');
+            if (newPassword) {
+                // Find and update user
+                const userIndex = users.findIndex(u => u.username === currentUser.username);
+                if (userIndex !== -1) {
+                    users[userIndex].password = newPassword;
+                    saveData();
+                    showNotification('Password changed successfully.');
+                }
+            }
+        }
+        
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+                // Remove user from users array
+                users = users.filter(u => u.username !== currentUser.username);
+                
+                // Remove user data
+                localStorage.removeItem(`kingUserData_${currentUser.username}`);
+                
+                // Logout
+                logout();
+                
+                showNotification('Your account has been deleted.');
+            }
+        }
+        
+        // Statistics functions
+        function showStatisticsModal() {
+            updateStatistics();
+            statsModalEl.classList.add('active');
+        }
+        
+        function hideStatisticsModal() {
+            statsModalEl.classList.remove('active');
+        }
+        
+        function updateStatistics() {
+            // Calculate total days
+            if (isRunning) {
+                const currentDay = Math.floor((initialTime - timeLeft) / (24 * 60 * 60)) + 1;
+                stats.totalDays = Math.max(stats.totalDays, currentDay);
+            }
+            
+            // Update display
+            totalDaysEl.textContent = stats.totalDays;
+            longestStreakEl.textContent = stats.longestStreak;
+            goalsCompletedEl.textContent = stats.goalsCompleted;
+            relapsesEl.textContent = stats.relapses;
+        }
+        
+        function exportStats() {
+            const statsData = {
+                username: currentUser.username,
+                stats: stats,
+                currentStreak: streak,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(statsData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `king-stats-${currentUser.username}-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Statistics exported successfully.');
+        }
+        
         // Wake-Up Mode Functions
         function activateWakeupMode() {
             wakeupModeEl.classList.add('active');
@@ -2649,6 +3771,10 @@
                 // Move to tactics tab
                 document.querySelector('[data-tab="tactics"]').click();
                 showNotification("Now it's time to break the cycle with these tactics.");
+            } else if (currentTabId === 'tactics') {
+                // Move to science tab
+                document.querySelector('[data-tab="science"]').click();
+                showNotification("Understanding the science will strengthen your resolve.");
             } else {
                 // All tabs completed, close Wake-Up Mode
                 exitWakeupMode();
@@ -2666,9 +3792,18 @@
         motivationEl.addEventListener('click', getRandomMotivation);
         disciplinedModeBtn.addEventListener('click', toggleDisciplinedMode);
         recordMessageBtn.addEventListener('click', openMessageRecorder);
+        statsBtn.addEventListener('click', showStatisticsModal);
         topWakeupBtn.addEventListener('click', activateWakeupMode);
         exitWakeupBtn.addEventListener('click', exitWakeupMode);
         takeActionBtn.addEventListener('click', takeAction);
+        
+        // Red Zone distraction exercise
+        checkAnswerBtn.addEventListener('click', checkMathAnswer);
+        mathAnswerEl.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkMathAnswer();
+            }
+        });
         
         // Message recorder event listeners
         recordBtn.addEventListener('click', startRecording);
@@ -2679,6 +3814,36 @@
         // Message playback event listeners
         playMessageBtn.addEventListener('click', playSavedMessage);
         closePlaybackBtn.addEventListener('click', closeMessagePlayback);
+        
+        // User account event listeners
+        logoutBtn.addEventListener('click', logout);
+        closeLoginModalBtn.addEventListener('click', hideLoginModal);
+        loginBtn.addEventListener('click', login);
+        signupBtn.addEventListener('click', signup);
+        switchToSignupEl.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchToSignup();
+        });
+        switchToLoginEl.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchToLogin();
+        });
+        
+        // Settings event listeners
+        settingsBtn.addEventListener('click', showSettingsModal);
+        closeSettingsModalBtn.addEventListener('click', hideSettingsModal);
+        dailyRemindersToggle.addEventListener('click', () => toggleSetting(dailyRemindersToggle, 'dailyReminders'));
+        milestoneAlertsToggle.addEventListener('click', () => toggleSetting(milestoneAlertsToggle, 'milestoneAlerts'));
+        motivationalMessagesToggle.addEventListener('click', () => toggleSetting(motivationalMessagesToggle, 'motivationalMessages'));
+        saveDataToggle.addEventListener('click', () => toggleSetting(saveDataToggle, 'saveData'));
+        clearDataBtn.addEventListener('click', clearData);
+        changePasswordBtn.addEventListener('click', changePassword);
+        deleteAccountBtn.addEventListener('click', deleteAccount);
+        saveSettingsBtn.addEventListener('click', saveSettings);
+        
+        // Statistics event listeners
+        closeStatsModalBtn.addEventListener('click', hideStatisticsModal);
+        exportStatsBtn.addEventListener('click', exportStats);
         
         // Tab switching functionality for Wake-Up Mode
         tabBtns.forEach(btn => {
